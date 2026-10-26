@@ -594,13 +594,19 @@ Import `blog-application-api/docs/postman_collection.json` into Postman:
 
 ---
 
-## Frontend Web Application
+## Frontend Web Application & User Dashboard
 
-BlogNest includes a responsive, Medium-inspired web frontend built with pure Vanilla JavaScript and Tailwind CSS (zero external build tools required):
+BlogNest includes a responsive, Medium/Substack-inspired editorial web frontend built with pure Vanilla JavaScript and Tailwind CSS (zero external build tools required):
 - **Live URL**: **[http://localhost:5000](http://localhost:5000)**
-- **Story Feed**: Editorial layout with reading time estimates, author avatars, and timestamps.
-- **Reading Canvas**: Dedicated distraction-free reading modal with claps counter and link sharing.
-- **Interactive Comments**: Real-time response submissions with instant optimistic updates.
+- **Unique User Dashboard**: Every authenticated user receives an automatic, personalized dashboard showing:
+  - User profile credentials (username, email, account role, unique MongoDB ID, member since).
+  - Story & response metrics (Total Published Stories, Total Received Comments, Authored Responses).
+  - **"My Stories"** manager tab to view, edit, or delete personal posts with cascade protection.
+  - **"My Responses"** tab listing all comments made by the user across the platform with direct post links.
+  - **"Account Details"** tab with security overview and JWT authentication details.
+- **Editorial Story Feed**: Clean layout with reading time estimates, author badges, and timestamps.
+- **Reading Canvas**: Dedicated distraction-free reading view with claps counter and link sharing.
+- **Interactive Comments**: Real-time response submissions under each post with instant UI updates.
 - **Story Writer**: Draft editor with live word count and reading time estimation.
 - **Instant Search & Topic Filtering**: Filter by keyword or topics (`Technology`, `Python`, `MongoDB`, `Architecture`).
 
