@@ -30,9 +30,12 @@ env/
 ENV/
 .venv/
 
-# Environment Variables
+# Environment and Configuration (Kept private, never pushed to GitHub)
 .env
-.env.local
+.env.*
+.env.example
+*.env
+*.env.example
 
 # Database
 *.sqlite3
