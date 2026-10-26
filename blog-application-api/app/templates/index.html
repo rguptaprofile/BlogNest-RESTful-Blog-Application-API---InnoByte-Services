@@ -3,27 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BlogNest - Modern Blog Platform (Project SCR845NGFF)</title>
+  <title>BlogNest — Ideas, Stories & Technical Insights</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Inter & Newsreader for an authentic Medium/Substack editorial feel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            serif: ['Newsreader', 'Georgia', 'serif'],
           },
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
+            accent: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            },
+            slate: {
+              850: '#151f32',
+              900: '#0f172a',
+              950: '#020617',
             }
           }
         }
@@ -31,54 +37,61 @@
     }
   </script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
+    body { font-family: 'Inter', sans-serif; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+    .story-content { font-family: 'Newsreader', Georgia, serif; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f8fafc; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-[#fafafa] text-slate-900 min-h-screen flex flex-col selection:bg-slate-900 selection:text-white">
 
-  <!-- Toast Container -->
-  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
 
-  <!-- Navbar -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-brand-500/20">
-          BN
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/70 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white font-serif font-bold text-xl shadow-sm">
+          B
         </div>
-        <div>
-          <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-brand-700">BlogNest</span>
-          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-50 text-brand-600 border border-brand-100">Project SCR845NGFF</span>
-        </div>
+        <span class="text-xl font-bold tracking-tight text-slate-900 font-serif">BlogNest</span>
       </div>
 
-      <!-- Nav Links -->
-      <div class="flex items-center gap-3 sm:gap-4">
-        <a href="/docs" target="_blank" class="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-brand-600 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-          Swagger Docs
-        </a>
+      <!-- Quick Search Bar (Header) -->
+      <div class="hidden sm:flex items-center relative flex-1 max-w-sm">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" id="header-search-input" oninput="handleSearch(this.value)" placeholder="Search stories, topics, authors..." 
+          class="w-full pl-9 pr-4 py-1.5 bg-slate-100/80 hover:bg-slate-100 focus:bg-white text-xs border border-transparent focus:border-slate-300 rounded-full transition outline-none" />
+      </div>
 
-        <!-- Auth Status & Controls -->
+      <!-- Navigation Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Write Story CTA (Opens Writer Modal) -->
+        <button onclick="openPostModal()" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-full hover:bg-slate-100 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+          <span>Write</span>
+        </button>
+
+        <!-- Guest View -->
         <div id="nav-guest" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="px-3.5 py-1.5 text-sm font-semibold text-slate-700 hover:text-brand-600 transition">Log In</button>
-          <button onclick="openAuthModal('register')" class="px-4 py-1.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition">Sign Up</button>
+          <button onclick="openAuthModal('login')" class="text-xs font-semibold text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-full hover:bg-slate-100 transition">Sign in</button>
+          <button onclick="openAuthModal('register')" class="text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-4 py-1.5 rounded-full transition shadow-sm">Get started</button>
         </div>
 
-        <div id="nav-user" class="hidden flex items-center gap-3">
-          <button onclick="openPostModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-            Write Post
-          </button>
-          <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
-            <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-xs" id="user-initial">U</div>
-            <span class="text-sm font-semibold text-slate-700 hidden sm:inline" id="user-display-name">Username</span>
-            <button onclick="logout()" title="Logout" class="p-1.5 text-slate-400 hover:text-red-600 rounded-md transition">
+        <!-- Authenticated User View -->
+        <div id="nav-user" class="hidden flex items-center gap-2.5">
+          <div class="flex items-center gap-2 pl-2">
+            <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-800 to-indigo-900 text-white flex items-center justify-center font-bold text-xs ring-2 ring-slate-100 shadow-sm">
+              U
+            </div>
+            <span id="user-display-name" class="text-xs font-semibold text-slate-700 hidden md:inline">User</span>
+            <button onclick="logout()" title="Sign out" class="text-slate-400 hover:text-rose-600 p-1.5 rounded-full hover:bg-slate-100 transition">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             </button>
           </div>
@@ -87,221 +100,264 @@
     </div>
   </header>
 
-  <!-- Hero Header -->
-  <section class="bg-gradient-to-b from-brand-50/50 to-transparent py-10 border-b border-slate-200/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto">
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Explore Insights & Ideas on <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-500">BlogNest</span>
-        </h1>
-        <p class="mt-3 text-slate-600 text-sm sm:text-base">
-          A high-performance RESTful API blogging platform powered by Flask, MongoDB, and JWT Authentication.
-        </p>
+  <!-- Editorial Hero Banner -->
+  <section class="border-b border-slate-200/70 bg-gradient-to-b from-white via-white to-slate-50/50 pt-12 pb-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl sm:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.15]">
+        Stay curious. Discover stories, thinking, and expertise.
+      </h1>
+      <p class="mt-4 text-base text-slate-500 max-w-xl mx-auto font-sans leading-relaxed">
+        A clean, distraction-free space for writers, creators, and developers to publish ideas and engage in meaningful discussions.
+      </p>
 
-        <!-- Stats Bar -->
-        <div class="mt-6 flex items-center justify-center gap-6 text-xs text-slate-500 font-medium">
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>MongoDB Connected</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-            <span id="stat-posts-count">0 Posts</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-            <span>REST API v1.0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Search & Filters -->
-      <div class="mt-8 max-w-xl mx-auto flex items-center gap-2">
-        <div class="relative flex-1">
-          <input type="text" id="search-input" placeholder="Search posts by title or keyword..." oninput="handleSearch()"
-            class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm" />
-          <svg class="w-5 h-5 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </div>
-        <button onclick="loadPosts()" class="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 hover:border-slate-300 rounded-xl text-sm font-semibold shadow-sm transition">
-          Refresh
-        </button>
+      <!-- Topic Filters Bar -->
+      <div class="mt-8 flex items-center justify-center gap-2 overflow-x-auto py-1 scrollbar-none text-xs font-medium">
+        <button onclick="filterByTopic('all')" class="topic-pill px-3.5 py-1.5 rounded-full bg-slate-900 text-white transition shadow-sm" data-topic="all">All Stories</button>
+        <button onclick="filterByTopic('Technology')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Technology">Technology</button>
+        <button onclick="filterByTopic('Python')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Python">Python</button>
+        <button onclick="filterByTopic('MongoDB')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="MongoDB">MongoDB</button>
+        <button onclick="filterByTopic('Architecture')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Architecture">Architecture</button>
       </div>
     </div>
   </section>
 
-  <!-- Main Content: Posts Grid -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-    <!-- Posts Grid Container -->
-    <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- Main Feed Section -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+    
+    <!-- Feed Header / Sorting -->
+    <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-8 text-xs font-medium text-slate-500">
+      <div class="flex items-center gap-2">
+        <span id="feed-status-text" class="text-slate-800 font-semibold">Latest Stories</span>
+        <span class="text-slate-300">•</span>
+        <span id="post-count-badge">Loading...</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSort()" class="hover:text-slate-900 flex items-center gap-1 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
+          <span id="sort-order-label">Newest first</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stories List Container -->
+    <div id="stories-container" class="space-y-8">
       <!-- Loading Skeleton -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 animate-pulse">
-        <div class="h-5 bg-slate-200 rounded w-3/4 mb-4"></div>
-        <div class="space-y-2 mb-6">
-          <div class="h-3 bg-slate-200 rounded"></div>
-          <div class="h-3 bg-slate-200 rounded w-5/6"></div>
+      <div class="p-6 bg-white rounded-2xl border border-slate-100 animate-pulse space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-slate-200"></div>
+          <div class="w-28 h-3 bg-slate-200 rounded"></div>
         </div>
-        <div class="h-8 bg-slate-100 rounded"></div>
+        <div class="w-3/4 h-6 bg-slate-200 rounded"></div>
+        <div class="w-full h-12 bg-slate-100 rounded"></div>
       </div>
     </div>
 
     <!-- Empty State -->
-    <div id="empty-state" class="hidden text-center py-16">
-      <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+    <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-8">
+      <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
       </div>
-      <h3 class="text-base font-bold text-slate-800">No blog posts found</h3>
-      <p class="text-sm text-slate-500 mt-1">Be the first to share your thoughts!</p>
-      <button onclick="openPostModal()" class="mt-4 px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-lg hover:bg-brand-700 transition">
-        Create Post
+      <h3 class="text-base font-semibold text-slate-900">No stories match your criteria</h3>
+      <p class="text-xs text-slate-500 mt-1">Try resetting filters or write the first story in this category!</p>
+      <button onclick="openPostModal()" class="mt-4 px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition">
+        Write a Story
       </button>
     </div>
   </main>
 
-  <!-- Post Detail & Comments Modal -->
-  <div id="detail-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
-      <!-- Modal Header -->
-      <div class="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
-        <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-600 mb-2" id="detail-author">Author</span>
-          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 leading-snug" id="detail-title">Post Title</h2>
-          <span class="text-xs text-slate-400" id="detail-date">Oct 25, 2026</span>
+  <!-- Full Story Reading Modal -->
+  <div id="reader-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex justify-center overflow-y-auto p-4 sm:p-6 md:p-10">
+    <div class="bg-white rounded-2xl max-w-3xl w-full my-auto shadow-2xl border border-slate-200/80 overflow-hidden relative">
+      
+      <!-- Top Action Bar -->
+      <div class="sticky top-0 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
+        <div class="flex items-center gap-3">
+          <button onclick="closeReaderModal()" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition p-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span>Back to Stories</span>
+          </button>
         </div>
-        <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
+        
+        <div class="flex items-center gap-2">
+          <button id="reader-share-btn" onclick="copyStoryLink()" title="Copy link" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+          </button>
+          <button onclick="closeReaderModal()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
       </div>
 
-      <!-- Modal Body -->
-      <div class="p-6 overflow-y-auto space-y-6 flex-1">
-        <!-- Post Content -->
-        <div class="text-slate-700 leading-relaxed text-sm whitespace-pre-line" id="detail-content"></div>
+      <!-- Article Content Body -->
+      <article class="px-6 sm:px-12 pt-8 pb-12">
+        <h1 id="reader-title" class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 leading-tight"></h1>
+        
+        <!-- Author Info Bar -->
+        <div class="mt-6 flex items-center justify-between pb-6 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <div id="reader-author-avatar" class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm">A</div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="reader-author-name" class="text-sm font-semibold text-slate-900">Author Name</span>
+                <span class="text-xs text-slate-400">•</span>
+                <span id="reader-read-time" class="text-xs text-slate-500">3 min read</span>
+              </div>
+              <span id="reader-date" class="text-xs text-slate-400">Published on Oct 26, 2026</span>
+            </div>
+          </div>
+          
+          <!-- Claps/Like Action -->
+          <button onclick="handleClap()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-900 transition text-xs font-medium">
+            <span id="reader-clap-icon">👏</span>
+            <span id="reader-clap-count">0</span>
+          </button>
+        </div>
+
+        <!-- Story Paragraphs -->
+        <div id="reader-body" class="mt-8 story-content text-lg text-slate-800 leading-relaxed space-y-5 whitespace-pre-line"></div>
 
         <!-- Comments Section -->
-        <div class="border-t border-slate-100 pt-6">
-          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 mb-4">
-            <span>Comments</span>
-            <span class="px-2 py-0.5 text-xs bg-slate-100 text-slate-600 rounded-full font-semibold" id="detail-comment-count">0</span>
-          </h4>
+        <section class="mt-14 pt-10 border-t border-slate-200">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2 font-serif">
+              <span>Responses</span>
+              <span id="reader-comment-count-badge" class="text-xs font-sans px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold">0</span>
+            </h3>
+          </div>
 
-          <!-- Add Comment Input -->
-          <div class="mb-5">
-            <div id="comment-auth-prompt" class="text-xs text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center justify-between">
-              <span>Please log in to participate in the discussion.</span>
-              <button onclick="openAuthModal('login')" class="text-brand-600 font-semibold hover:underline">Log In</button>
+          <!-- New Comment Input Form -->
+          <div class="mb-8">
+            <div id="reader-comment-auth-gate" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs text-slate-600">
+              <span>Have thoughts on this story?</span>
+              <button onclick="openAuthModal('login')" class="ml-1.5 font-semibold text-slate-900 underline hover:text-black">Sign in to leave a response</button>
             </div>
-            <div id="comment-form-container" class="hidden">
-              <textarea id="comment-input" rows="2" placeholder="Write a thoughtful comment..." class="w-full p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"></textarea>
-              <div class="flex justify-end mt-2">
-                <button onclick="submitComment()" class="px-3.5 py-1.5 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition">
-                  Post Comment
-                </button>
+            <div id="reader-comment-form" class="hidden">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl focus-within:bg-white focus-within:border-slate-400 transition">
+                <textarea id="comment-textarea" rows="3" placeholder="What are your thoughts?" 
+                  class="w-full text-xs text-slate-800 placeholder-slate-400 bg-transparent resize-none outline-none"></textarea>
+                <div class="flex justify-end pt-2 border-t border-slate-100 mt-2">
+                  <button onclick="submitComment()" class="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-full text-xs font-medium transition shadow-sm">
+                    Respond
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Comments List -->
-          <div id="comments-list" class="space-y-3"></div>
-        </div>
-      </div>
+          <!-- Comments Feed -->
+          <div id="reader-comments-list" class="space-y-4"></div>
+        </section>
+      </article>
     </div>
   </div>
 
-  <!-- Create / Edit Post Modal -->
-  <div id="post-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-        <h3 class="text-lg font-bold text-slate-900" id="post-modal-title">Create Blog Post</h3>
-        <button onclick="closePostModal()" class="text-slate-400 hover:text-slate-600">
+  <!-- Story Editor Modal (Create / Edit) -->
+  <div id="editor-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full my-auto shadow-2xl border border-slate-200 p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+        <h3 id="editor-modal-title" class="text-lg font-serif font-bold text-slate-900">Draft a Story</h3>
+        <button onclick="closePostModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-full">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
 
-      <form id="post-form" onsubmit="handlePostSubmit(event)" class="mt-4 space-y-4">
-        <input type="hidden" id="edit-post-id" />
+      <form onsubmit="handlePostSubmit(event)" class="space-y-5">
+        <input type="hidden" id="editor-post-id" />
+        
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Post Title</label>
-          <input type="text" id="post-title-input" required placeholder="e.g. Getting Started with MongoDB & Python"
-            class="w-full px-3.5 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <label class="block text-xs font-medium text-slate-500 mb-1">Story Title</label>
+          <input type="text" id="editor-title" required placeholder="Title your story..." 
+            class="w-full px-4 py-2.5 text-base font-serif font-medium border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
         </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Content</label>
-          <textarea id="post-content-input" rows="6" required placeholder="Write your post content here..."
-            class="w-full p-3.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"></textarea>
+          <label class="block text-xs font-medium text-slate-500 mb-1">Story Content</label>
+          <textarea id="editor-content" rows="8" required placeholder="Tell your story... Share code, architectural principles, or ideas."
+            class="w-full p-4 text-sm font-sans text-slate-800 border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition resize-none"></textarea>
         </div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closePostModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
-          <button type="submit" id="post-submit-btn" class="px-4 py-2 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition">
-            Publish Post
-          </button>
+
+        <div class="flex items-center justify-between pt-2">
+          <span class="text-xs text-slate-400 font-sans" id="editor-stats">0 words</span>
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="closePostModal()" class="px-4 py-2 text-xs font-medium text-slate-500 hover:text-slate-800 transition">Discard</button>
+            <button type="submit" id="editor-submit-btn" class="px-5 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-full transition shadow-sm">
+              Publish Story
+            </button>
+          </div>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Auth Modal (Login / Register) -->
+  <!-- Authentication Modal (Sign In / Sign Up) -->
   <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <!-- Tabs -->
+    <div class="bg-white rounded-2xl max-w-sm w-full p-7 shadow-2xl border border-slate-200 relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <div class="flex gap-4">
-          <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="text-sm font-bold pb-2 border-b-2 border-brand-600 text-brand-600 transition">Log In</button>
-          <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="text-sm font-semibold pb-2 border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition">Register</button>
+          <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition">Sign in</button>
+          <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition">Sign up</button>
         </div>
-        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 pb-2">
+        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 p-1">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
 
-      <!-- Auth Form -->
-      <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="mt-4 space-y-3.5">
+      <form onsubmit="handleAuthSubmit(event)" class="mt-5 space-y-4">
         <div id="group-username" class="hidden">
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Username</label>
-          <input type="text" id="auth-username" placeholder="johndoe" class="w-full px-3.5 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <label class="block text-xs font-medium text-slate-600 mb-1">Username</label>
+          <input type="text" id="auth-username" placeholder="e.g. alex_river" 
+            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Email</label>
-          <input type="email" id="auth-email" required placeholder="john@example.com" class="w-full px-3.5 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <label class="block text-xs font-medium text-slate-600 mb-1">Email address</label>
+          <input type="email" id="auth-email" required placeholder="you@domain.com" 
+            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
-          <input type="password" id="auth-password" required placeholder="••••••••" class="w-full px-3.5 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <label class="block text-xs font-medium text-slate-600 mb-1">Password</label>
+          <input type="password" id="auth-password" required placeholder="Minimum 6 characters" 
+            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
         </div>
-        <button type="submit" id="auth-submit-btn" class="w-full mt-2 py-2.5 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-sm transition">
-          Log In
+        <button type="submit" id="auth-submit-btn" class="w-full py-2.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-full transition shadow-sm mt-2">
+          Continue
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200/80 py-6 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
-      <div>
-        <strong>BlogNest API</strong> • Project ID: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-700 font-mono">SCR845NGFF</code>
+  <!-- Clean Editorial Footer -->
+  <footer class="mt-auto border-t border-slate-200 bg-white py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+      <div class="flex items-center gap-3">
+        <span class="font-serif font-bold text-slate-800 text-sm">BlogNest</span>
+        <span>•</span>
+        <span>Crafted for writers and readers</span>
       </div>
-      <div class="flex items-center gap-4">
-        <a href="/docs" target="_blank" class="hover:text-brand-600 transition">Swagger UI</a>
-        <a href="/swagger.json" target="_blank" class="hover:text-brand-600 transition">OpenAPI Spec</a>
-        <span>MongoDB Database</span>
+      <div class="flex items-center gap-5">
+        <a href="/docs" target="_blank" class="hover:text-slate-800 transition">API Documentation</a>
+        <a href="/swagger.json" target="_blank" class="hover:text-slate-800 transition">OpenAPI Spec</a>
+        <span>MongoDB Document Store</span>
       </div>
     </div>
   </footer>
 
-  <!-- Frontend Application Logic -->
+  <!-- Application Logic -->
   <script>
-    // State
-    let currentAuthMode = 'login';
+    // Application State
     let currentUser = null;
     let allPosts = [];
-    let currentViewingPostId = null;
+    let displayedPosts = [];
+    let activeTopic = 'all';
+    let sortAscending = false;
+    let currentStory = null;
+    let clapsMap = {};
 
     // Toast Utility
     function showToast(message, type = 'success') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
-      const bg = type === 'success' ? 'bg-emerald-600' : 'bg-rose-600';
-      toast.className = `${bg} text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 pointer-events-auto transition-all transform translate-y-2 opacity-0 duration-200`;
+      const bg = type === 'success' ? 'bg-slate-900 text-white' : 'bg-rose-600 text-white';
+      toast.className = `${bg} text-xs font-medium px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 pointer-events-auto transition-all transform translate-y-2 opacity-0 duration-200`;
       toast.innerHTML = `<span>${message}</span>`;
       container.appendChild(toast);
 
@@ -312,17 +368,14 @@
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-2');
         setTimeout(() => toast.remove(), 200);
-      }, 3500);
+      }, 3000);
     }
 
-    // Auth Storage
-    function getToken() {
-      return localStorage.getItem('blognest_token');
-    }
-
+    // Token & Auth Management
+    function getToken() { return localStorage.getItem('blognest_jwt_token'); }
     function setToken(token) {
-      if (token) localStorage.setItem('blognest_token', token);
-      else localStorage.removeItem('blognest_token');
+      if (token) localStorage.setItem('blognest_jwt_token', token);
+      else localStorage.removeItem('blognest_jwt_token');
     }
 
     async function checkAuth() {
@@ -343,7 +396,7 @@
           setToken(null);
           updateAuthUI(null);
         }
-      } catch (e) {
+      } catch (err) {
         updateAuthUI(null);
       }
     }
@@ -352,20 +405,20 @@
       currentUser = user;
       const guestNav = document.getElementById('nav-guest');
       const userNav = document.getElementById('nav-user');
-      const commentPrompt = document.getElementById('comment-auth-prompt');
-      const commentForm = document.getElementById('comment-form-container');
+      const commentGate = document.getElementById('reader-comment-auth-gate');
+      const commentForm = document.getElementById('reader-comment-form');
 
       if (user) {
         guestNav.classList.add('hidden');
         userNav.classList.remove('hidden');
         document.getElementById('user-display-name').textContent = user.username;
-        document.getElementById('user-initial').textContent = user.username.charAt(0).toUpperCase();
-        if (commentPrompt) commentPrompt.classList.add('hidden');
+        document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+        if (commentGate) commentGate.classList.add('hidden');
         if (commentForm) commentForm.classList.remove('hidden');
       } else {
         guestNav.classList.remove('hidden');
         userNav.classList.add('hidden');
-        if (commentPrompt) commentPrompt.classList.remove('hidden');
+        if (commentGate) commentGate.classList.remove('hidden');
         if (commentForm) commentForm.classList.add('hidden');
       }
     }
@@ -374,11 +427,12 @@
       setToken(null);
       currentUser = null;
       updateAuthUI(null);
-      showToast('Logged out successfully.');
+      showToast('Signed out.');
       loadPosts();
     }
 
-    // Modals
+    // Auth Modal Handlers
+    let currentAuthTab = 'login';
     function openAuthModal(mode = 'login') {
       switchAuthTab(mode);
       document.getElementById('auth-modal').classList.remove('hidden');
@@ -389,24 +443,24 @@
     }
 
     function switchAuthTab(mode) {
-      currentAuthMode = mode;
+      currentAuthTab = mode;
       const tabLogin = document.getElementById('tab-login');
       const tabReg = document.getElementById('tab-register');
-      const userGroup = document.getElementById('group-username');
-      const submitBtn = document.getElementById('auth-submit-btn');
+      const groupUsername = document.getElementById('group-username');
+      const btn = document.getElementById('auth-submit-btn');
 
       if (mode === 'login') {
-        tabLogin.className = "text-sm font-bold pb-2 border-b-2 border-brand-600 text-brand-600 transition";
-        tabReg.className = "text-sm font-semibold pb-2 border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition";
-        userGroup.classList.add('hidden');
+        tabLogin.className = "text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition";
+        tabReg.className = "text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition";
+        groupUsername.classList.add('hidden');
         document.getElementById('auth-username').required = false;
-        submitBtn.textContent = 'Log In';
+        btn.textContent = 'Sign in';
       } else {
-        tabReg.className = "text-sm font-bold pb-2 border-b-2 border-brand-600 text-brand-600 transition";
-        tabLogin.className = "text-sm font-semibold pb-2 border-b-2 border-transparent text-slate-400 hover:text-slate-600 transition";
-        userGroup.classList.remove('hidden');
+        tabReg.className = "text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition";
+        tabLogin.className = "text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition";
+        groupUsername.classList.remove('hidden');
         document.getElementById('auth-username').required = true;
-        submitBtn.textContent = 'Create Account';
+        btn.textContent = 'Create account';
       }
     }
 
@@ -414,10 +468,10 @@
       e.preventDefault();
       const email = document.getElementById('auth-email').value.trim();
       const password = document.getElementById('auth-password').value;
-      const endpoint = currentAuthMode === 'login' ? '/login' : '/register';
+      const endpoint = currentAuthTab === 'login' ? '/login' : '/register';
       const body = { email, password };
 
-      if (currentAuthMode === 'register') {
+      if (currentAuthTab === 'register') {
         body.username = document.getElementById('auth-username').value.trim();
       }
 
@@ -428,57 +482,66 @@
           body: JSON.stringify(body)
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Authentication failed');
+        if (!res.ok) throw new Error(data.error || 'Authentication error');
 
         setToken(data.access_token);
         currentUser = data.user;
         updateAuthUI(currentUser);
         closeAuthModal();
-        showToast(currentAuthMode === 'login' ? 'Logged in successfully!' : 'Account registered successfully!');
+        showToast(currentAuthTab === 'login' ? `Welcome back, ${currentUser.username}!` : 'Account created successfully!');
         loadPosts();
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    // Post Modals
+    // Story Editor Modal
     function openPostModal(post = null) {
       if (!currentUser) {
         openAuthModal('login');
         return;
       }
-      const modal = document.getElementById('post-modal');
-      const modalTitle = document.getElementById('post-modal-title');
-      const submitBtn = document.getElementById('post-submit-btn');
-      const editIdInput = document.getElementById('edit-post-id');
-      const titleInput = document.getElementById('post-title-input');
-      const contentInput = document.getElementById('post-content-input');
+      const titleEl = document.getElementById('editor-modal-title');
+      const idInput = document.getElementById('editor-post-id');
+      const titleInput = document.getElementById('editor-title');
+      const contentInput = document.getElementById('editor-content');
+      const submitBtn = document.getElementById('editor-submit-btn');
 
       if (post) {
-        modalTitle.textContent = 'Edit Blog Post';
-        submitBtn.textContent = 'Update Post';
-        editIdInput.value = post.id;
+        titleEl.textContent = 'Edit Story';
+        idInput.value = post.id;
         titleInput.value = post.title;
         contentInput.value = post.content;
+        submitBtn.textContent = 'Save changes';
       } else {
-        modalTitle.textContent = 'Create Blog Post';
-        submitBtn.textContent = 'Publish Post';
-        editIdInput.value = '';
+        titleEl.textContent = 'Draft a Story';
+        idInput.value = '';
         titleInput.value = '';
         contentInput.value = '';
+        submitBtn.textContent = 'Publish Story';
       }
-      modal.classList.remove('hidden');
+      updateEditorWordCount();
+      document.getElementById('editor-modal').classList.remove('hidden');
     }
 
     function closePostModal() {
-      document.getElementById('post-modal').classList.add('hidden');
+      document.getElementById('editor-modal').classList.add('hidden');
     }
+
+    function updateEditorWordCount() {
+      const content = document.getElementById('editor-content').value.trim();
+      const words = content ? content.split(/\s+/).length : 0;
+      const readMin = Math.max(1, Math.ceil(words / 200));
+      document.getElementById('editor-stats').textContent = `${words} words • ~${readMin} min read`;
+    }
+
+    document.getElementById('editor-content').addEventListener('input', updateEditorWordCount);
 
     async function handlePostSubmit(e) {
       e.preventDefault();
-      const editId = document.getElementById('edit-post-id').value;
-      const title = document.getElementById('post-title-input').value.trim();
-      const content = document.getElementById('post-content-input').value.trim();
+      const editId = document.getElementById('editor-post-id').value;
+      const title = document.getElementById('editor-title').value.trim();
+      const content = document.getElementById('editor-content').value.trim();
       const token = getToken();
 
       const url = editId ? `/posts/${editId}` : '/posts';
@@ -494,21 +557,21 @@
           body: JSON.stringify({ title, content })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Operation failed');
+        if (!res.ok) throw new Error(data.error || 'Failed to save post');
 
         closePostModal();
-        showToast(editId ? 'Post updated successfully!' : 'Post published successfully!');
+        showToast(editId ? 'Story updated!' : 'Story published to BlogNest!');
         loadPosts();
-        if (editId && currentViewingPostId === editId) {
-          viewPost(editId);
+        if (editId && currentStory && currentStory.id === editId) {
+          openReaderModal(editId);
         }
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    async function deletePost(postId) {
-      if (!confirm('Are you sure you want to delete this post? All associated comments will also be deleted.')) return;
+    async function deleteStory(postId) {
+      if (!confirm('Are you sure you want to delete this story? This action cannot be undone.')) return;
       const token = getToken();
       try {
         const res = await fetch(`/posts/${postId}`, {
@@ -516,68 +579,101 @@
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed to delete post');
-        showToast('Post deleted.');
-        closeDetailModal();
+        if (!res.ok) throw new Error(data.error || 'Failed to delete story');
+
+        showToast('Story deleted.');
+        closeReaderModal();
         loadPosts();
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    // Detail & Comments Modal
-    async function viewPost(postId) {
-      currentViewingPostId = postId;
+    // Story Reader View
+    async function openReaderModal(postId) {
       try {
         const res = await fetch(`/posts/${postId}`);
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed to load post');
+        if (!res.ok) throw new Error(data.error || 'Failed to load story');
 
-        const post = data.post;
-        document.getElementById('detail-title').textContent = post.title;
-        document.getElementById('detail-author').textContent = `By @${post.author || 'Anonymous'}`;
-        document.getElementById('detail-date').textContent = new Date(post.created_at).toLocaleString();
-        document.getElementById('detail-content').textContent = post.content;
-        document.getElementById('detail-comment-count').textContent = (post.comments || []).length;
+        currentStory = data.post;
+        document.getElementById('reader-title').textContent = currentStory.title;
+        document.getElementById('reader-author-name').textContent = `@${currentStory.author || 'Writer'}`;
+        document.getElementById('reader-author-avatar').textContent = (currentStory.author || 'W').charAt(0).toUpperCase();
+        
+        const words = currentStory.content ? currentStory.content.split(/\s+/).length : 0;
+        const readTime = Math.max(1, Math.ceil(words / 200));
+        document.getElementById('reader-read-time').textContent = `${readTime} min read`;
+        document.getElementById('reader-date').textContent = new Date(currentStory.created_at).toLocaleDateString([], {
+          month: 'long', day: 'numeric', year: 'numeric'
+        });
 
-        renderComments(post.comments || []);
-        document.getElementById('detail-modal').classList.remove('hidden');
+        document.getElementById('reader-body').textContent = currentStory.content;
+        
+        // Claps setup
+        clapsMap[postId] = clapsMap[postId] || Math.floor(Math.random() * 8) + 1;
+        document.getElementById('reader-clap-count').textContent = clapsMap[postId];
+
+        renderReaderComments(currentStory.comments || []);
+        document.getElementById('reader-modal').classList.remove('hidden');
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    function closeDetailModal() {
-      document.getElementById('detail-modal').classList.add('hidden');
-      currentViewingPostId = null;
+    function closeReaderModal() {
+      document.getElementById('reader-modal').classList.add('hidden');
+      currentStory = null;
     }
 
-    function renderComments(comments) {
-      const list = document.getElementById('comments-list');
+    function handleClap() {
+      if (!currentStory) return;
+      clapsMap[currentStory.id] = (clapsMap[currentStory.id] || 0) + 1;
+      document.getElementById('reader-clap-count').textContent = clapsMap[currentStory.id];
+      const icon = document.getElementById('reader-clap-icon');
+      icon.classList.add('scale-125');
+      setTimeout(() => icon.classList.remove('scale-125'), 200);
+    }
+
+    function copyStoryLink() {
+      if (!currentStory) return;
+      const url = `${window.location.origin}/posts/${currentStory.id}`;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Story link copied to clipboard!');
+      });
+    }
+
+    // Comments within Reader
+    function renderReaderComments(comments) {
+      const container = document.getElementById('reader-comments-list');
+      const badge = document.getElementById('reader-comment-count-badge');
+      badge.textContent = comments.length;
+
       if (!comments || comments.length === 0) {
-        list.innerHTML = `<p class="text-xs text-slate-400 italic py-2">No comments yet. Start the conversation!</p>`;
+        container.innerHTML = `<p class="text-xs text-slate-400 italic py-2">No responses yet. Be the first to share your thoughts.</p>`;
         return;
       }
 
-      list.innerHTML = comments.map(c => {
-        const isAuthor = currentUser && String(c.author_id) === String(currentUser.id);
-        const time = new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      container.innerHTML = comments.map(c => {
+        const isCommentAuthor = currentUser && String(c.author_id) === String(currentUser.id);
+        const timeAgo = formatTimeAgo(c.created_at);
+
         return `
-          <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-100 flex items-start justify-between gap-3 group">
-            <div class="flex items-start gap-2.5">
-              <div class="w-7 h-7 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
+          <div class="p-4 bg-slate-50/80 rounded-xl border border-slate-100 flex items-start justify-between gap-3 group">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
                 ${(c.author || 'U').charAt(0).toUpperCase()}
               </div>
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-xs font-bold text-slate-800">@${c.author || 'user'}</span>
-                  <span class="text-[10px] text-slate-400">${time}</span>
+                  <span class="text-xs font-semibold text-slate-900">@${c.author || 'reader'}</span>
+                  <span class="text-[10px] text-slate-400">${timeAgo}</span>
                 </div>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed">${escapeHtml(c.content)}</p>
+                <p class="text-xs text-slate-700 mt-1 leading-relaxed">${escapeHtml(c.content)}</p>
               </div>
             </div>
-            ${isAuthor ? `
-              <button onclick="deleteComment('${c.id}')" title="Delete comment" class="text-slate-300 hover:text-red-600 p-1 rounded transition opacity-0 group-hover:opacity-100">
+            ${isCommentAuthor ? `
+              <button onclick="deleteComment('${c.id}')" title="Delete response" class="text-slate-300 hover:text-rose-600 p-1 rounded transition opacity-0 group-hover:opacity-100">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
               </button>
             ` : ''}
@@ -587,9 +683,9 @@
     }
 
     async function submitComment() {
-      const input = document.getElementById('comment-input');
-      const content = input.value.trim();
-      if (!content) return;
+      const textarea = document.getElementById('comment-textarea');
+      const content = textarea.value.trim();
+      if (!content || !currentStory) return;
       const token = getToken();
 
       try {
@@ -599,14 +695,14 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ post_id: currentViewingPostId, content })
+          body: JSON.stringify({ post_id: currentStory.id, content })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Failed to post comment');
+        if (!res.ok) throw new Error(data.error || 'Failed to submit response');
 
-        input.value = '';
-        showToast('Comment posted!');
-        viewPost(currentViewingPostId);
+        textarea.value = '';
+        showToast('Response added.');
+        openReaderModal(currentStory.id);
         loadPosts();
       } catch (err) {
         showToast(err.message, 'error');
@@ -614,7 +710,7 @@
     }
 
     async function deleteComment(commentId) {
-      if (!confirm('Delete this comment?')) return;
+      if (!confirm('Delete this response?')) return;
       const token = getToken();
       try {
         const res = await fetch(`/comments/${commentId}`, {
@@ -623,43 +719,91 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to delete comment');
-        showToast('Comment deleted.');
-        viewPost(currentViewingPostId);
+
+        showToast('Response removed.');
+        if (currentStory) openReaderModal(currentStory.id);
         loadPosts();
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    // Load Posts
+    // Feed Loading & Filtering
     async function loadPosts() {
       try {
-        const res = await fetch('/posts?per_page=50');
+        const res = await fetch('/posts?per_page=100');
         const data = await res.json();
         allPosts = data.posts || [];
-        document.getElementById('stat-posts-count').textContent = `${allPosts.length} Posts`;
-        renderPosts(allPosts);
-      } catch (e) {
-        document.getElementById('posts-container').innerHTML = `<p class="text-xs text-rose-500">Failed to load posts.</p>`;
+        applyFiltersAndRender();
+      } catch (err) {
+        document.getElementById('stories-container').innerHTML = `<p class="text-xs text-rose-500 py-4">Unable to load stories at this time.</p>`;
       }
     }
 
-    function handleSearch() {
-      const query = document.getElementById('search-input').value.toLowerCase().trim();
-      if (!query) {
-        renderPosts(allPosts);
-        return;
+    function applyFiltersAndRender() {
+      let filtered = [...allPosts];
+
+      // Topic filter
+      if (activeTopic !== 'all') {
+        const t = activeTopic.toLowerCase();
+        filtered = filtered.filter(p => 
+          p.title.toLowerCase().includes(t) || 
+          p.content.toLowerCase().includes(t)
+        );
       }
-      const filtered = allPosts.filter(p =>
-        p.title.toLowerCase().includes(query) ||
-        p.content.toLowerCase().includes(query) ||
-        (p.author && p.author.toLowerCase().includes(query))
-      );
-      renderPosts(filtered);
+
+      // Search query filter
+      const searchVal = document.getElementById('header-search-input').value.toLowerCase().trim();
+      if (searchVal) {
+        filtered = filtered.filter(p =>
+          p.title.toLowerCase().includes(searchVal) ||
+          p.content.toLowerCase().includes(searchVal) ||
+          (p.author && p.author.toLowerCase().includes(searchVal))
+        );
+      }
+
+      // Sorting
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.created_at || 0);
+        const dateB = new Date(b.created_at || 0);
+        return sortAscending ? dateA - dateB : dateB - dateA;
+      });
+
+      displayedPosts = filtered;
+      document.getElementById('post-count-badge').textContent = `${displayedPosts.length} stories`;
+      renderStories(displayedPosts);
     }
 
-    function renderPosts(posts) {
-      const container = document.getElementById('posts-container');
+    function handleSearch(val) {
+      applyFiltersAndRender();
+    }
+
+    function filterByTopic(topic) {
+      activeTopic = topic;
+      document.querySelectorAll('.topic-pill').forEach(btn => {
+        if (btn.dataset.topic === topic) {
+          btn.className = "topic-pill px-3.5 py-1.5 rounded-full bg-slate-900 text-white transition shadow-sm";
+        } else {
+          btn.className = "topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition";
+        }
+      });
+      document.getElementById('feed-status-text').textContent = topic === 'all' ? 'Latest Stories' : `${topic} Stories`;
+      applyFiltersAndRender();
+    }
+
+    function toggleSort() {
+      sortAscending = !sortAscending;
+      document.getElementById('sort-order-label').textContent = sortAscending ? 'Oldest first' : 'Newest first';
+      applyFiltersAndRender();
+    }
+
+    function resetFilters() {
+      document.getElementById('header-search-input').value = '';
+      filterByTopic('all');
+    }
+
+    function renderStories(posts) {
+      const container = document.getElementById('stories-container');
       const emptyState = document.getElementById('empty-state');
 
       if (!posts || posts.length === 0) {
@@ -671,43 +815,59 @@
       emptyState.classList.add('hidden');
       container.innerHTML = posts.map(p => {
         const isAuthor = currentUser && String(p.author_id) === String(currentUser.id);
-        const snippet = p.content.length > 130 ? p.content.substring(0, 130) + '...' : p.content;
-        const dateStr = new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+        const words = p.content ? p.content.split(/\s+/).length : 0;
+        const readTime = Math.max(1, Math.ceil(words / 200));
+        const dateStr = new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' });
+        const snippet = p.content.length > 200 ? p.content.substring(0, 200) + '...' : p.content;
 
         return `
-          <article class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+          <article class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 hover:border-slate-300 hover:shadow-sm transition-all duration-200 flex flex-col justify-between group">
             <div>
-              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
-                <span class="inline-flex items-center gap-1.5 font-semibold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full">
-                  @${p.author || 'Author'}
-                </span>
-                <span>${dateStr}</span>
+              <!-- Author Meta Row -->
+              <div class="flex items-center justify-between text-xs text-slate-500 mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-bold text-[10px]">
+                    ${(p.author || 'W').charAt(0).toUpperCase()}
+                  </div>
+                  <span class="font-medium text-slate-800">@${p.author || 'writer'}</span>
+                  <span class="text-slate-300">•</span>
+                  <span>${dateStr}</span>
+                </div>
+                <span class="text-slate-400 text-[11px]">${readTime} min read</span>
               </div>
-              <h3 class="text-base font-bold text-slate-900 group-hover:text-brand-600 transition leading-snug cursor-pointer line-clamp-2" onclick="viewPost('${p.id}')">
+
+              <!-- Title & Snippet -->
+              <h2 onclick="openReaderModal('${p.id}')" class="text-xl sm:text-2xl font-serif font-bold text-slate-900 group-hover:text-slate-700 cursor-pointer transition leading-snug">
                 ${escapeHtml(p.title)}
-              </h3>
-              <p class="text-xs text-slate-600 mt-2.5 leading-relaxed line-clamp-3">
+              </h2>
+              <p onclick="openReaderModal('${p.id}')" class="mt-2.5 text-xs sm:text-sm text-slate-600 font-sans leading-relaxed line-clamp-2 cursor-pointer">
                 ${escapeHtml(snippet)}
               </p>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-              <div class="flex items-center gap-1.5 text-slate-500 font-medium">
-                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                <span>${p.comments_count || 0} Comments</span>
+            <!-- Footer Stats & Actions -->
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+              <div class="flex items-center gap-4">
+                <span class="inline-flex items-center gap-1.5 hover:text-slate-700 cursor-pointer transition" onclick="openReaderModal('${p.id}')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                  <span>${p.comments_count || 0}</span>
+                </span>
+                <span class="hover:text-slate-700 cursor-pointer transition" onclick="quickClap('${p.id}')">
+                  👏 ${clapsMap[p.id] || 3}
+                </span>
               </div>
 
               <div class="flex items-center gap-2">
                 ${isAuthor ? `
-                  <button onclick="openPostModal(${escapeJsonForAttr(p)})" title="Edit post" class="p-1.5 text-slate-400 hover:text-brand-600 rounded-md transition">
+                  <button onclick="openPostModal(${escapeJsonForAttr(p)})" title="Edit story" class="p-1.5 text-slate-400 hover:text-slate-800 rounded-md transition">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                   </button>
-                  <button onclick="deletePost('${p.id}')" title="Delete post" class="p-1.5 text-slate-400 hover:text-red-600 rounded-md transition">
+                  <button onclick="deleteStory('${p.id}')" title="Delete story" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-md transition">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                   </button>
                 ` : ''}
-                <button onclick="viewPost('${p.id}')" class="px-3 py-1 font-semibold text-brand-600 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition">
-                  Read &rarr;
+                <button onclick="openReaderModal('${p.id}')" class="font-medium text-slate-900 hover:text-black hover:underline transition">
+                  Read story &rarr;
                 </button>
               </div>
             </div>
@@ -716,6 +876,12 @@
       }).join('');
     }
 
+    function quickClap(id) {
+      clapsMap[id] = (clapsMap[id] || 3) + 1;
+      applyFiltersAndRender();
+    }
+
+    // Utilities
     function escapeHtml(str) {
       if (!str) return '';
       return String(str)
@@ -730,7 +896,26 @@
       return JSON.stringify(obj).replace(/"/g, '&quot;');
     }
 
-    // Startup Initialization
+    function formatTimeAgo(dateStr) {
+      if (!dateStr) return 'Just now';
+      const d = new Date(dateStr);
+      const diffSec = Math.floor((new Date() - d) / 1000);
+      if (diffSec < 60) return 'Just now';
+      if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+      if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+      return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    }
+
+    // Keyboard support: ESC closes modals
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeReaderModal();
+        closePostModal();
+        closeAuthModal();
+      }
+    });
+
+    // Startup
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       loadPosts();
