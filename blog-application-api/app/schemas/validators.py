@@ -35,11 +35,11 @@ def validate_login_payload(data: dict):
     if not isinstance(data, dict):
         return False, "Request body must be a valid JSON object."
 
-    email = str(data.get("email", "")).strip()
+    identifier = str(data.get("email") or data.get("username") or "").strip()
     password = str(data.get("password", ""))
 
-    if not email or not password:
-        return False, "Email and password are required."
+    if not identifier or not password:
+        return False, "Email or username and password are required."
 
     return True, None
 

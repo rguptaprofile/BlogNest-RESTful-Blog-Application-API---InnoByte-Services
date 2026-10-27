@@ -49,12 +49,15 @@ def login():
     if not is_valid:
         return error_response(err_msg, 400)
 
-    email = str(data["email"]).strip()
+    identifier = str(data.get("email") or data.get("username") or "").strip()
     password = str(data["password"])
 
-    user_doc = User.find_by_email(email)
+    user_doc = User.find_by_email(identifier)
+    if not user_doc:
+        user_doc = User.find_by_username(identifier)
+
     if not user_doc or not User.check_password(user_doc, password):
-        return error_response("Invalid email or password.", 401)
+        return error_response("Invalid credentials.", 401)
 
     user_id = str(user_doc["_id"])
     access_token = create_access_token(identity=user_id)

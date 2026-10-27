@@ -46,6 +46,7 @@ def create_app(config_name=None):
 
     template_dir = os.path.join(os.path.dirname(__file__), "templates")
     app = Flask(__name__, template_folder=template_dir)
+    app.url_map.strict_slashes = False
     app.config.from_object(config_by_name.get(config_name, config_by_name["default"]))
 
     # Initialize extensions

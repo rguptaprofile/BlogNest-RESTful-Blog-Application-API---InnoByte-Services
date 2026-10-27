@@ -640,18 +640,21 @@ HOST=0.0.0.0
 ```
 
 ### 4. Initialize MongoDB Collections & Indexes
+Run directly from workspace root:
 ```powershell
-cd blog-application-api
 python init_db.py
 ```
+*(Or from within `blog-application-api/`: `cd blog-application-api && python init_db.py`)*
 
 ### 5. Start the Application Server
+Run directly from workspace root:
 ```powershell
 python run.py
 ```
 - API Base URL: `http://localhost:5000`
 - Web Frontend: `http://localhost:5000`
 - Swagger UI Docs: `http://localhost:5000/docs`
+- OpenAPI JSON Spec: `http://localhost:5000/swagger.json`
 
 ---
 
@@ -660,16 +663,16 @@ python run.py
 The test suite validates all endpoints, validation rules, authentication barriers, and cross-user permission boundaries using `pytest`:
 
 ```powershell
-pytest
+pytest -v
 ```
 
 ### Test Coverage Highlights
-- `tests/test_auth.py`: Registration, duplicate username/email prevention (409), password length validation, login token generation.
-- `tests/test_posts.py`: Post creation, paginated listing, single post retrieval with comments, author-only updates, and deletion.
-- `tests/test_comments.py`: Comment creation on posts, post ID query filtering (`/comments?post_id=...`), author updates, and deletion.
+- `tests/test_auth.py`: Registration, duplicate username/email prevention (409 Conflict), input payload validation (400 Bad Request), login with email or username, and authenticated `/me` profile retrieval (401 Unauthorized vs 200 OK).
+- `tests/test_posts.py`: Post creation, unauthorized post creation (401), missing title/content validation (400), paginated listing, single post retrieval with comments, author-only updates, cross-user forbidden edits (403), author deletion, and non-existent post handling (404).
+- `tests/test_comments.py`: Comment creation on posts, standalone `/comments` creation, post ID query filtering (`/comments?post_id=...`), comment payload validation, unauthorized access denial, cross-user comment edit/delete protection (403), single comment retrieval, and deletion.
 - `tests/test_integration.py`: Complete multi-user lifecycle (User A creates post $\rightarrow$ User B comments $\rightarrow$ Unauthorized cross-user edit denial $\rightarrow$ Author updates post $\rightarrow$ Author deletes post $\rightarrow$ Automatic cascade comment deletion verified).
 
-**Test Execution Result**: `12 passed in ~3s (0 warnings, 0 errors)`.
+**Test Execution Result**: `18 passed in ~5s (0 warnings, 0 errors)`.
 
 ---
 
@@ -677,12 +680,12 @@ pytest
 
 | Deliverable | Requirement | Implementation Status |
 |---|---|---|
-| **RESTful API** | Posts & Comments CRUD with validation & RBAC | ✅ Fully Implemented in `app/routes/` |
+| **RESTful API** | Posts & Comments CRUD with validation & RBAC | ✅ Fully Implemented (`/posts`, `/comments`, `/register`, `/login`, `/me`) |
 | **Database Schema** | MongoDB with indexes & cascade delete | ✅ Fully Implemented in `app/models/` & `init_db.py` |
 | **Comprehensive Docs** | Swagger UI, Postman collection, User Manual | ✅ `/docs`, `swagger.json`, `postman_collection.json`, `README.md` |
-| **Automated Tests** | Unit & Integration testing suite | ✅ 12 passed in `tests/` |
-| **Web Frontend** | Modern, responsive editorial blogging UI | ✅ Available at `http://localhost:5000` |
-| **Clean Codebase** | Modular architecture, single root documentation | ✅ Ready for Git repository submission |
+| **Automated Tests** | Unit & Integration testing suite | ✅ 18 passed in `blog-application-api/tests/` |
+| **User Dashboard & Web UI** | Modern, responsive editorial blogging UI + unique user dashboard | ✅ Available at `http://localhost:5000` |
+| **Clean Codebase** | Modular architecture, root runner scripts, Git-protected env | ✅ Ready for InnoByte Services evaluation |
 
 ---
 
