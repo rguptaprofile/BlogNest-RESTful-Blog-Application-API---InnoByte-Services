@@ -99,6 +99,14 @@ def test_comment_rbac_and_errors(client, auth_headers):
     res_del_forbidden = client.delete(f"/comments/{comment_id}", headers=headers2)
     assert res_del_forbidden.status_code == 403
 
+    # User 2 comments on User 1's post
+    c2_res = client.post("/comments", headers=headers2, json={"post_id": post_id, "content": "User 2 comment to moderate"})
+    c2_id = c2_res.get_json()["comment"]["id"]
+
+    # User 1 (post author) can moderate/delete User 2's comment on their post -> 200 OK
+    res_mod = client.delete(f"/comments/{c2_id}", headers=auth_headers)
+    assert res_mod.status_code == 200
+
     # 404 for non-existent comment
     res_404 = client.get("/comments/000000000000000000000000")
     assert res_404.status_code == 404
