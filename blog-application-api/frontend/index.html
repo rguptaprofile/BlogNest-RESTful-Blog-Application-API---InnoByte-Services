@@ -38,6 +38,21 @@
     ::-webkit-scrollbar-track { background: #f8fafc; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal-in {
+      animation: modalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes alertShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: alertShake 0.35s ease-in-out;
+    }
   </style>
 </head>
 <body class="bg-[#fafafa] text-slate-900 min-h-screen flex flex-col selection:bg-slate-900 selection:text-white">
@@ -79,9 +94,12 @@
         </button>
 
         <!-- Guest View -->
-        <div id="nav-guest" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="text-xs font-semibold text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-full hover:bg-slate-100 transition">Sign in</button>
-          <button onclick="openAuthModal('register')" class="text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-4 py-1.5 rounded-full transition shadow-sm">Get started</button>
+        <div id="nav-guest" class="flex items-center gap-2 sm:gap-2.5">
+          <button onclick="openAuthModal('login')" class="text-xs font-semibold text-slate-700 hover:text-slate-900 px-3.5 py-1.5 rounded-full hover:bg-slate-100 transition">Sign in</button>
+          <button onclick="openAuthModal('register')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-4 py-1.5 rounded-full transition shadow-sm hover:shadow">
+            <span>Get started</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
         </div>
 
         <!-- Authenticated User View -->
@@ -130,6 +148,30 @@
           <button onclick="filterByTopic('Python')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Python">Python</button>
           <button onclick="filterByTopic('MongoDB')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="MongoDB">MongoDB</button>
           <button onclick="filterByTopic('Architecture')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Architecture">Architecture</button>
+        </div>
+
+        <!-- Editorial Guest Invitation Banner (Shown when not logged in) -->
+        <div id="feed-guest-cta" class="mt-8 max-w-2xl mx-auto p-4 sm:p-5 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white rounded-2xl shadow-sm border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+          <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 shrink-0 font-serif font-bold text-lg">
+              ✍️
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-semibold tracking-tight text-white flex items-center gap-2">
+                <span>Start writing on BlogNest</span>
+                <span class="text-[10px] font-sans uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free</span>
+              </h4>
+              <p class="text-[11px] text-slate-300 mt-0.5">Publish your technical guides, system designs, or essays to an engaged audience.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+            <button onclick="openAuthModal('register')" class="flex-1 sm:flex-initial text-xs font-semibold px-4 py-2 rounded-full bg-white text-slate-900 hover:bg-slate-100 transition shadow-sm text-center">
+              Create Account
+            </button>
+            <button onclick="openAuthModal('login')" class="flex-1 sm:flex-initial text-xs font-medium px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition text-center">
+              Sign In
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -361,9 +403,16 @@
 
           <!-- New Comment Input Form -->
           <div class="mb-8">
-            <div id="reader-comment-auth-gate" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs text-slate-600">
-              <span>Have thoughts on this story?</span>
-              <button onclick="openAuthModal('login')" class="ml-1.5 font-semibold text-slate-900 underline hover:text-black">Sign in to leave a response</button>
+            <div id="reader-comment-auth-gate" class="p-6 bg-gradient-to-br from-slate-50 to-indigo-50/30 rounded-2xl border border-slate-200/80 text-center">
+              <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center mx-auto mb-2.5 shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              </div>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">Join the conversation</h4>
+              <p class="text-xs text-slate-500 max-w-sm mx-auto mb-3.5">Sign in or create a free BlogNest writer account to leave a response, applaud this story, and connect with authors.</p>
+              <div class="flex items-center justify-center gap-2.5">
+                <button onclick="openAuthModal('login')" class="text-xs font-semibold px-4 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 transition shadow-sm">Sign in to respond</button>
+                <button onclick="openAuthModal('register')" class="text-xs font-semibold px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition">Create account</button>
+              </div>
             </div>
             <div id="reader-comment-form" class="hidden">
               <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl focus-within:bg-white focus-within:border-slate-400 transition">
@@ -423,39 +472,220 @@
     </div>
   </div>
 
-  <!-- Authentication Modal (Sign In / Sign Up) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-7 shadow-2xl border border-slate-200 relative">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div class="flex gap-4">
-          <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition">Sign in</button>
-          <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition">Sign up</button>
+  <!-- ======================================================== -->
+  <!-- AUTHENTICATION MODAL: EDITORIAL SIGN IN / SIGN UP        -->
+  <!-- ======================================================== -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 transition-all duration-300 overflow-y-auto" onclick="handleAuthBackdropClick(event)">
+    <div id="auth-modal-card" class="bg-white rounded-3xl max-w-4xl w-full shadow-2xl border border-slate-200/80 overflow-hidden relative transition-all my-auto grid grid-cols-1 md:grid-cols-12 animate-modal-in" onclick="event.stopPropagation()">
+      
+      <!-- Left Column: Editorial Showcase & Brand Storytelling -->
+      <div class="md:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+        <!-- Ambient Glow Elements -->
+        <div class="absolute -top-24 -left-24 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Brand Monogram & Badge -->
+        <div class="relative z-10 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-white text-slate-950 flex items-center justify-center font-serif font-black text-xl shadow-md">
+            B
+          </div>
+          <div>
+            <span class="text-base font-bold font-serif tracking-tight text-white block">BlogNest</span>
+            <span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold block">Editorial Community</span>
+          </div>
         </div>
-        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 p-1">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
+
+        <!-- Editorial Inspiration & Feature Highlights -->
+        <div class="my-6 sm:my-8 relative z-10 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[11px] font-medium backdrop-blur-sm border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Independent Writing Platform</span>
+          </div>
+
+          <h3 class="text-xl sm:text-2xl font-serif font-normal leading-snug text-white tracking-tight">
+            "Where technical depth meets thoughtful storytelling."
+          </h3>
+          
+          <p class="text-xs text-slate-300/90 leading-relaxed font-sans">
+            Join an authentic ecosystem of engineers, architects, and creators writing about software, infrastructure, and craft.
+          </p>
+
+          <!-- 3 Editorial Feature Pillars -->
+          <div class="pt-2 space-y-2.5 text-xs text-slate-300">
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-emerald-400 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+              </div>
+              <span>Distraction-free Markdown editor</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-indigo-400 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              </div>
+              <span>Meaningful responses & reader applause</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-amber-400 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+              </div>
+              <span>Personal author metrics & dashboard</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Proof Footer -->
+        <div class="pt-5 border-t border-white/10 relative z-10 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="flex -space-x-2">
+              <div class="w-7 h-7 rounded-full bg-indigo-600 ring-2 ring-slate-900 flex items-center justify-center text-[10px] font-bold">JD</div>
+              <div class="w-7 h-7 rounded-full bg-emerald-600 ring-2 ring-slate-900 flex items-center justify-center text-[10px] font-bold">AR</div>
+              <div class="w-7 h-7 rounded-full bg-amber-600 ring-2 ring-slate-900 flex items-center justify-center text-[10px] font-bold">SK</div>
+            </div>
+            <span class="text-[11px] text-slate-300 font-medium">10,000+ writers & readers</span>
+          </div>
+          <span class="text-[10px] text-emerald-400 font-mono">REST API</span>
+        </div>
       </div>
 
-      <form onsubmit="handleAuthSubmit(event)" class="mt-5 space-y-4">
-        <div id="group-username" class="hidden">
-          <label class="block text-xs font-medium text-slate-600 mb-1">Username</label>
-          <input type="text" id="auth-username" placeholder="e.g. alex_river" 
-            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600 mb-1">Email address</label>
-          <input type="email" id="auth-email" required placeholder="you@domain.com" 
-            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600 mb-1">Password</label>
-          <input type="password" id="auth-password" required placeholder="Minimum 6 characters" 
-            class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
-        </div>
-        <button type="submit" id="auth-submit-btn" class="w-full py-2.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-full transition shadow-sm mt-2">
-          Continue
+      <!-- Right Column: Interactive Authentication Form -->
+      <div class="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between bg-white relative">
+        <!-- Close Button -->
+        <button type="button" onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-800 p-1.5 rounded-full hover:bg-slate-100 transition z-10" title="Close dialog">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-      </form>
+
+        <div>
+          <!-- Header info -->
+          <div>
+            <span id="auth-mode-badge" class="inline-block text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80 mb-2">Member Sign In</span>
+            <h2 id="auth-modal-title" class="text-2xl font-serif font-bold text-slate-900">Welcome back.</h2>
+            <p id="auth-modal-subtitle" class="text-xs text-slate-500 mt-1">Sign in to access your customized story feed, drafts, and responses.</p>
+          </div>
+
+          <!-- Modern Tab Switcher -->
+          <div class="bg-slate-100 p-1 rounded-xl flex items-center mt-4 mb-4 text-xs font-medium">
+            <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-lg text-slate-900 bg-white font-semibold shadow-sm transition">
+              Sign In
+            </button>
+            <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 rounded-lg text-slate-500 hover:text-slate-900 transition">
+              Create Account
+            </button>
+          </div>
+
+          <!-- Quick Test Credentials Box -->
+          <div class="flex flex-wrap items-center justify-between py-2 px-3 rounded-xl bg-slate-50 border border-slate-200/80 mb-4 text-[11px] text-slate-600 gap-1.5">
+            <span class="flex items-center gap-1.5 font-medium text-slate-700">
+              <span>⚡</span>
+              <span>Quick Demo Fill:</span>
+            </span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="fillDemoCredentials('author')" class="font-semibold text-slate-900 underline hover:text-indigo-600 transition">
+                Demo Author
+              </button>
+              <span class="text-slate-300">•</span>
+              <button type="button" onclick="fillDemoCredentials('reader')" class="font-semibold text-slate-900 underline hover:text-indigo-600 transition">
+                Guest Reader
+              </button>
+            </div>
+          </div>
+
+          <!-- Inline Error Banner -->
+          <div id="auth-error-banner" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5 mb-4 animate-shake">
+            <svg class="w-4 h-4 shrink-0 mt-0.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <div class="flex-1">
+              <span id="auth-error-text" class="font-medium">Error message</span>
+            </div>
+            <button type="button" onclick="hideAuthError()" class="text-rose-400 hover:text-rose-600">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+
+          <!-- Form -->
+          <form onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
+            <!-- Username Field (Sign up only) -->
+            <div id="group-username" class="hidden">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Author Handle / Username</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 font-medium text-xs">@</div>
+                <input type="text" id="auth-username" oninput="handleUsernameInput(this.value)" placeholder="e.g. alex_river" 
+                  class="w-full pl-8 pr-3.5 py-2.5 text-xs bg-slate-50/60 hover:bg-slate-50 focus:bg-white border border-slate-200 rounded-xl outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition" />
+              </div>
+              <p class="text-[10px] text-slate-400 mt-1 flex items-center justify-between">
+                <span>Unique handle for your author byline.</span>
+                <span class="text-slate-500 font-mono" id="username-preview-slug">@handle</span>
+              </p>
+            </div>
+
+            <!-- Email or Identifier Field -->
+            <div>
+              <label id="auth-email-label" class="block text-xs font-semibold text-slate-700 mb-1">Email address or username</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+                </div>
+                <input type="text" id="auth-email" required placeholder="you@domain.com" 
+                  class="w-full pl-9 pr-3.5 py-2.5 text-xs bg-slate-50/60 hover:bg-slate-50 focus:bg-white border border-slate-200 rounded-xl outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition" />
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <input type="password" id="auth-password" required oninput="handlePasswordInput(this.value)" placeholder="Minimum 6 characters" 
+                  class="w-full pl-9 pr-10 py-2.5 text-xs bg-slate-50/60 hover:bg-slate-50 focus:bg-white border border-slate-200 rounded-xl outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition" />
+                <button type="button" onclick="togglePasswordVisibility()" title="Show/Hide password" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition">
+                  <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                </button>
+              </div>
+
+              <!-- Password Helper / Requirements (Signup mode) -->
+              <div id="password-reqs" class="hidden mt-1.5 flex items-center gap-3 text-[11px] text-slate-400">
+                <span id="pw-check-len" class="inline-flex items-center gap-1 transition text-slate-400">
+                  <svg id="pw-icon-len" class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span id="pw-text-len">At least 6 characters</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Login Options: Remember me & Forgot Password -->
+            <div id="auth-login-options" class="flex items-center justify-between text-xs text-slate-500 pt-0.5">
+              <label class="flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="auth-remember-me" checked class="rounded border-slate-300 text-slate-900 focus:ring-slate-800" />
+                <span>Keep me signed in</span>
+              </label>
+              <button type="button" onclick="showForgotPasswordAlert()" class="text-xs text-slate-600 hover:text-slate-900 hover:underline">
+                Forgot password?
+              </button>
+            </div>
+
+            <!-- Action Button -->
+            <button type="submit" id="auth-submit-btn" class="w-full py-3 px-4 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 active:scale-[0.99] rounded-xl transition shadow-md flex items-center justify-center gap-2 mt-3 group">
+              <span id="auth-submit-text">Sign in to BlogNest</span>
+              <svg id="auth-submit-arrow" class="w-4 h-4 group-hover:translate-x-0.5 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              <svg id="auth-submit-spinner" class="w-4 h-4 animate-spin hidden text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Footer / Switch Prompt -->
+        <div class="pt-5 mt-4 border-t border-slate-100">
+          <div class="text-center text-xs text-slate-500">
+            <span id="auth-switch-prompt">Don't have an account?</span>
+            <button type="button" id="auth-switch-link" onclick="toggleAuthMode()" class="ml-1 font-semibold text-slate-900 hover:underline">
+              Create one for free
+            </button>
+          </div>
+          <p class="text-[10px] text-slate-400 text-center mt-3">
+            By continuing, you agree to BlogNest's
+            <a href="/docs" target="_blank" class="underline hover:text-slate-600">Terms</a> and acknowledge our 
+            <a href="/docs" target="_blank" class="underline hover:text-slate-600">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -542,12 +772,14 @@
       currentUser = user;
       const guestNav = document.getElementById('nav-guest');
       const userNav = document.getElementById('nav-user');
+      const guestBanner = document.getElementById('feed-guest-cta');
       const commentGate = document.getElementById('reader-comment-auth-gate');
       const commentForm = document.getElementById('reader-comment-form');
 
       if (user) {
         guestNav.classList.add('hidden');
         userNav.classList.remove('hidden');
+        if (guestBanner) guestBanner.classList.add('hidden');
         document.getElementById('user-display-name').textContent = user.username;
         document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
         if (commentGate) commentGate.classList.add('hidden');
@@ -555,6 +787,7 @@
       } else {
         guestNav.classList.remove('hidden');
         userNav.classList.add('hidden');
+        if (guestBanner) guestBanner.classList.remove('hidden');
         if (commentGate) commentGate.classList.remove('hidden');
         if (commentForm) commentForm.classList.add('hidden');
         if (currentMainView === 'dashboard') {
@@ -754,49 +987,237 @@
       }).join('');
     }
 
-    // Auth Modal Handlers
+    // Auth Modal Handlers & Interactivity
     let currentAuthTab = 'login';
+    let isPasswordVisible = false;
+
     function openAuthModal(mode = 'login') {
       switchAuthTab(mode);
-      document.getElementById('auth-modal').classList.remove('hidden');
+      const modal = document.getElementById('auth-modal');
+      modal.classList.remove('hidden');
+      hideAuthError();
+      setTimeout(() => {
+        if (mode === 'register') {
+          const u = document.getElementById('auth-username');
+          if (u) u.focus();
+        } else {
+          const e = document.getElementById('auth-email');
+          if (e) e.focus();
+        }
+      }, 60);
     }
 
     function closeAuthModal() {
-      document.getElementById('auth-modal').classList.add('hidden');
+      const modal = document.getElementById('auth-modal');
+      modal.classList.add('hidden');
+      hideAuthError();
+      resetAuthSubmitButton();
+    }
+
+    function handleAuthBackdropClick(e) {
+      if (e.target.id === 'auth-modal') {
+        closeAuthModal();
+      }
+    }
+
+    function toggleAuthMode() {
+      switchAuthTab(currentAuthTab === 'login' ? 'register' : 'login');
+    }
+
+    function showAuthError(message) {
+      const banner = document.getElementById('auth-error-banner');
+      const text = document.getElementById('auth-error-text');
+      if (banner && text) {
+        text.textContent = message;
+        banner.classList.remove('hidden');
+      }
+    }
+
+    function hideAuthError() {
+      const banner = document.getElementById('auth-error-banner');
+      if (banner) banner.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility() {
+      isPasswordVisible = !isPasswordVisible;
+      const pwInput = document.getElementById('auth-password');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (!pwInput) return;
+
+      if (isPasswordVisible) {
+        pwInput.type = 'text';
+        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>`;
+      } else {
+        pwInput.type = 'password';
+        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>`;
+      }
+    }
+
+    function handleUsernameInput(val) {
+      const clean = val.replace(/[^a-zA-Z0-9_]/g, '');
+      const preview = document.getElementById('username-preview-slug');
+      if (preview) {
+        preview.textContent = clean ? `@${clean}` : '@handle';
+      }
+    }
+
+    function handlePasswordInput(val) {
+      if (currentAuthTab !== 'register') return;
+      const checkLen = document.getElementById('pw-check-len');
+      const iconLen = document.getElementById('pw-icon-len');
+      if (checkLen && iconLen) {
+        if (val.length >= 6) {
+          checkLen.className = "inline-flex items-center gap-1 transition text-emerald-600 font-semibold";
+          iconLen.className = "w-3.5 h-3.5 text-emerald-600";
+        } else {
+          checkLen.className = "inline-flex items-center gap-1 transition text-slate-400";
+          iconLen.className = "w-3.5 h-3.5 text-slate-300";
+        }
+      }
+    }
+
+    function fillDemoCredentials(role) {
+      hideAuthError();
+      const usernameInput = document.getElementById('auth-username');
+      const emailInput = document.getElementById('auth-email');
+      const passwordInput = document.getElementById('auth-password');
+
+      if (role === 'author') {
+        if (currentAuthTab === 'register') {
+          usernameInput.value = 'alex_river';
+          emailInput.value = 'alex@blognest.internal';
+          handleUsernameInput('alex_river');
+        } else {
+          emailInput.value = 'alex@blognest.internal';
+        }
+        passwordInput.value = 'Password123!';
+      } else {
+        if (currentAuthTab === 'register') {
+          usernameInput.value = 'guest_reader';
+          emailInput.value = 'reader@blognest.internal';
+          handleUsernameInput('guest_reader');
+        } else {
+          emailInput.value = 'reader@blognest.internal';
+        }
+        passwordInput.value = 'Password123!';
+      }
+      handlePasswordInput(passwordInput.value);
+      showToast('Demo credentials pre-filled!', 'success');
+    }
+
+    function showForgotPasswordAlert() {
+      showToast('To reset in demo mode, register a new account or sign in with any valid credentials.', 'success');
+    }
+
+    function resetAuthSubmitButton() {
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const submitText = document.getElementById('auth-submit-text');
+      const submitArrow = document.getElementById('auth-submit-arrow');
+      const submitSpinner = document.getElementById('auth-submit-spinner');
+      if (!submitBtn) return;
+      submitBtn.disabled = false;
+      if (submitArrow) submitArrow.classList.remove('hidden');
+      if (submitSpinner) submitSpinner.classList.add('hidden');
+      if (submitText) {
+        submitText.textContent = currentAuthTab === 'login' ? 'Sign in to BlogNest' : 'Create Free Writer Profile';
+      }
     }
 
     function switchAuthTab(mode) {
       currentAuthTab = mode;
+      hideAuthError();
       const tabLogin = document.getElementById('tab-login');
       const tabReg = document.getElementById('tab-register');
       const groupUsername = document.getElementById('group-username');
-      const btn = document.getElementById('auth-submit-btn');
+      const emailLabel = document.getElementById('auth-email-label');
+      const emailInput = document.getElementById('auth-email');
+      const usernameInput = document.getElementById('auth-username');
+      const badge = document.getElementById('auth-mode-badge');
+      const title = document.getElementById('auth-modal-title');
+      const subtitle = document.getElementById('auth-modal-subtitle');
+      const submitText = document.getElementById('auth-submit-text');
+      const pwReqs = document.getElementById('password-reqs');
+      const loginOptions = document.getElementById('auth-login-options');
+      const switchPrompt = document.getElementById('auth-switch-prompt');
+      const switchLink = document.getElementById('auth-switch-link');
 
       if (mode === 'login') {
-        tabLogin.className = "text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition";
-        tabReg.className = "text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition";
+        tabLogin.className = "flex-1 py-2 rounded-lg text-slate-900 bg-white font-semibold shadow-sm transition";
+        tabReg.className = "flex-1 py-2 rounded-lg text-slate-500 hover:text-slate-900 transition";
+        
+        badge.textContent = "Member Sign In";
+        badge.className = "inline-block text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80 mb-2";
+        title.textContent = "Welcome back.";
+        subtitle.textContent = "Sign in to access your customized story feed, drafts, and responses.";
+        
         groupUsername.classList.add('hidden');
-        document.getElementById('auth-username').required = false;
-        btn.textContent = 'Sign in';
+        usernameInput.required = false;
+        
+        emailLabel.textContent = "Email address or username";
+        emailInput.placeholder = "you@domain.com or @username";
+        
+        pwReqs.classList.add('hidden');
+        loginOptions.classList.remove('hidden');
+        
+        submitText.textContent = "Sign in to BlogNest";
+        switchPrompt.textContent = "Don't have an account?";
+        switchLink.textContent = "Create one for free";
       } else {
-        tabReg.className = "text-sm font-bold text-slate-900 pb-1 border-b-2 border-slate-900 transition";
-        tabLogin.className = "text-sm font-medium text-slate-400 pb-1 border-b-2 border-transparent hover:text-slate-700 transition";
+        tabReg.className = "flex-1 py-2 rounded-lg text-slate-900 bg-white font-semibold shadow-sm transition";
+        tabLogin.className = "flex-1 py-2 rounded-lg text-slate-500 hover:text-slate-900 transition";
+        
+        badge.textContent = "Author Registration";
+        badge.className = "inline-block text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/80 mb-2";
+        title.textContent = "Start your writing journey.";
+        subtitle.textContent = "Create your free author profile in seconds. Publish ideas, clap for stories, and join discussions.";
+        
         groupUsername.classList.remove('hidden');
-        document.getElementById('auth-username').required = true;
-        btn.textContent = 'Create account';
+        usernameInput.required = true;
+        
+        emailLabel.textContent = "Email address";
+        emailInput.placeholder = "you@domain.com";
+        
+        pwReqs.classList.remove('hidden');
+        loginOptions.classList.add('hidden');
+        
+        submitText.textContent = "Create Free Writer Profile";
+        switchPrompt.textContent = "Already have an account?";
+        switchLink.textContent = "Sign in here";
       }
+      resetAuthSubmitButton();
     }
 
     async function handleAuthSubmit(e) {
       e.preventDefault();
+      hideAuthError();
       const email = document.getElementById('auth-email').value.trim();
       const password = document.getElementById('auth-password').value;
       const endpoint = currentAuthTab === 'login' ? '/login' : '/register';
       const body = { email, password };
 
       if (currentAuthTab === 'register') {
-        body.username = document.getElementById('auth-username').value.trim();
+        const username = document.getElementById('auth-username').value.trim();
+        if (!username) {
+          showAuthError('Please choose an author username.');
+          return;
+        }
+        if (password.length < 6) {
+          showAuthError('Password must contain at least 6 characters.');
+          return;
+        }
+        body.username = username;
       }
+
+      // Button loading state
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const submitText = document.getElementById('auth-submit-text');
+      const submitArrow = document.getElementById('auth-submit-arrow');
+      const submitSpinner = document.getElementById('auth-submit-spinner');
+      
+      submitBtn.disabled = true;
+      if (submitArrow) submitArrow.classList.add('hidden');
+      if (submitSpinner) submitSpinner.classList.remove('hidden');
+      if (submitText) submitText.textContent = currentAuthTab === 'login' ? 'Authenticating...' : 'Creating profile...';
 
       try {
         const res = await fetch(endpoint, {
@@ -805,18 +1226,22 @@
           body: JSON.stringify(body)
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Authentication error');
+        if (!res.ok) {
+          throw new Error(data.error || 'Authentication error. Please check your credentials.');
+        }
 
         setToken(data.access_token);
         currentUser = data.user;
         updateAuthUI(currentUser);
         closeAuthModal();
-        showToast(currentAuthTab === 'login' ? `Welcome back, ${currentUser.username}!` : 'Account created successfully!');
+        showToast(currentAuthTab === 'login' ? `Welcome back, ${currentUser.username}!` : `Account created! Welcome to BlogNest, ${currentUser.username}!`);
         
         // After signup/signin, take user straight to their unique Dashboard!
         switchMainView('dashboard');
       } catch (err) {
+        showAuthError(err.message);
         showToast(err.message, 'error');
+        resetAuthSubmitButton();
       }
     }
 
@@ -1245,6 +1670,14 @@
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       loadPosts();
+
+      // Deep link support for #signin, #signup, #login, #register
+      const hash = (window.location.hash || '').toLowerCase();
+      if (hash === '#signin' || hash === '#login') {
+        openAuthModal('login');
+      } else if (hash === '#signup' || hash === '#register') {
+        openAuthModal('register');
+      }
     });
   </script>
 </body>
