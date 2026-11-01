@@ -132,8 +132,12 @@ def delete_comment(comment_id: str):
     if not comment_doc:
         return error_response("Comment not found.", 404)
 
-    if str(comment_doc.get("author_id")) != current_user_id:
-        return error_response("Unauthorized: You can only delete your own comments.", 403)
+    is_comment_author = str(comment_doc.get("author_id")) == current_user_id
+    post_doc = Post.find_by_id(comment_doc.get("post_id"))
+    is_post_author = post_doc and str(post_doc.get("author_id")) == current_user_id
+
+    if not (is_comment_author or is_post_author):
+        return error_response("Unauthorized: You can only delete your own comments or comments on your posts.", 403)
 
     Comment.delete_by_id(comment_id)
     return success_response(message="Comment deleted successfully.", status_code=200)

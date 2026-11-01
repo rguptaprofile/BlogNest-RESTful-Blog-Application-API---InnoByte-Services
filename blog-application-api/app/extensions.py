@@ -59,6 +59,19 @@ class MockCollection:
             if k == "$or" and isinstance(v, list):
                 if not any(self._matches(doc, cond) for cond in v):
                     return False
+            elif isinstance(v, dict) and "$in" in v:
+                val = doc.get(k)
+                in_list = v["$in"]
+                val_str = str(val) if val is not None else None
+                matched_in = any(str(item) == val_str or item == val for item in in_list)
+                if not matched_in:
+                    return False
+            elif isinstance(v, dict) and "$nin" in v:
+                val = doc.get(k)
+                nin_list = v["$nin"]
+                val_str = str(val) if val is not None else None
+                if any(str(item) == val_str or item == val for item in nin_list):
+                    return False
             elif str(doc.get(k)) != str(v):
                 return False
         return True
@@ -231,6 +244,7 @@ class MongoDB:
             "title": "Welcome to BlogNest - RESTful Blog Application API!",
             "content": "BlogNest is a high-performance blogging application API built with Flask, MongoDB, and JWT authentication. It provides full CRUD operations for posts, interactive commenting with cascade deletion, and full OpenAPI / Swagger documentation.\n\nWhether you are drafting technical essays, designing software blueprints, or engaging with fellow engineers through comments and applause, BlogNest offers an authentic editorial experience engineered for readability and speed.",
             "author_id": str(user1_id),
+            "topic": "Technology",
             "created_at": now,
             "updated_at": now,
         })
@@ -241,6 +255,7 @@ class MongoDB:
             "title": "Mastering REST APIs with Python & MongoDB",
             "content": "Designing RESTful APIs requires clean separation of concerns, strong input validation, and robust role-based access control. MongoDB document collections provide flexible schemas that scale seamlessly.\n\nIn this guide, we explore how indexing compound keys, structuring embedded versus referenced relationships, and leveraging PyMongo connection pooling can yield sub-millisecond query responses under heavy concurrency.",
             "author_id": str(user1_id),
+            "topic": "Python",
             "created_at": now,
             "updated_at": now,
         })
@@ -251,6 +266,7 @@ class MongoDB:
             "title": "Designing High-Throughput REST APIs with Python & Connection Pooling",
             "content": "When scaling Python web services from hundreds of requests per second to tens of thousands, database connection churn is almost always the silent killer.\n\nOpening and tearing down TCP connections and performing SSL handshakes on every HTTP call exhausts system file descriptors. By tuning PyMongo's maxPoolSize, waitQueueTimeoutMS, and socketTimeoutMS parameters, we observed an 82% reduction in p99 latency on our core endpoints.",
             "author_id": str(user3_id),
+            "topic": "Python",
             "created_at": now,
             "updated_at": now,
         })
@@ -261,6 +277,7 @@ class MongoDB:
             "title": "Building Fault-Tolerant Distributed Microservices: An Architect's Blueprint",
             "content": "In distributed microservices, failures are not anomalies — they are an everyday certainty. Circuit breakers, idempotent consumer patterns, and retry policies with exponential backoff and jitter are fundamental to preventing cascading outages.\n\nThis article details our production blueprint for partitioning services around business domains, decoupling communication via asynchronous event streams, and maintaining operational observability with structured JSON telemetry.",
             "author_id": str(user4_id),
+            "topic": "Architecture",
             "created_at": now,
             "updated_at": now,
         })
@@ -271,6 +288,7 @@ class MongoDB:
             "title": "Demystifying JWT Security: Access Tokens, Refresh Cycles & Revocation Strategies",
             "content": "JSON Web Tokens (JWT) are ubiquitous in modern single-page applications and REST APIs. However, improper signature verification, missing expiration times, or vulnerable local storage handling can open critical attack vectors.\n\nWe break down how to implement dual-token authentication (short-lived access tokens paired with securely hashed refresh tokens stored in HTTP-only cookies), along with distributed blacklist caches using Redis for immediate session revocation.",
             "author_id": str(user2_id),
+            "topic": "Technology",
             "created_at": now,
             "updated_at": now,
         })
@@ -281,6 +299,7 @@ class MongoDB:
             "title": "From Monolith to Modular Monolith: Pragmatic Architecture in 2026",
             "content": "Before jumping straight to microservices and paying the immense distributed systems tax, consider the modular monolith. By enforcing clean boundaries at the package and interface level, teams achieve high maintainability and rapid iteration.\n\nWe walk through real-world lessons from reorganizing a legacy codebase into cohesive vertical slices with isolated domains, shared database schemas, and strictly typed internal contracts.",
             "author_id": str(user4_id),
+            "topic": "Architecture",
             "created_at": now,
             "updated_at": now,
         })
@@ -291,6 +310,7 @@ class MongoDB:
             "title": "Zero-Downtime Database Migrations with MongoDB Document Versioning",
             "content": "Unlike relational databases that enforce strict column DDL locks, MongoDB's flexible schema enables elegant expand-and-contract migration patterns.\n\nBy embedding a schema_version field inside documents and writing lazy-migration decoders in your application models, you can update schemas dynamically on read/write cycles without ever shutting down the API or running costly batch updates on millions of rows.",
             "author_id": str(user3_id),
+            "topic": "MongoDB",
             "created_at": now,
             "updated_at": now,
         })
@@ -301,6 +321,7 @@ class MongoDB:
             "title": "Clean Code vs Fast Delivery: Finding the Pragmatic Sweet Spot in Tech Teams",
             "content": "The debate between perfectionist software craft and shipping velocity is often framed as a zero-sum game. In reality, the best engineering teams build sustainable software by treating maintainability as a catalyst for speed, not an obstacle.\n\nHere are five concrete heuristics we use to determine when to refactor aggressively, when to incur controlled technical debt, and how to write tests that protect business logic without creating brittle maintenance burdens.",
             "author_id": str(user1_id),
+            "topic": "Architecture",
             "created_at": now,
             "updated_at": now,
         })

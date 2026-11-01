@@ -8,12 +8,13 @@ class Post:
     """MongoDB Blog Post Document Repository."""
 
     @staticmethod
-    def create(title: str, content: str, author_id: str) -> dict:
+    def create(title: str, content: str, author_id: str, topic: str = None) -> dict:
         now = datetime.now(timezone.utc)
         post_doc = {
             "title": title.strip(),
             "content": content.strip(),
             "author_id": str(author_id),
+            "topic": topic.strip() if topic else "Technology",
             "created_at": now,
             "updated_at": now,
         }
@@ -71,6 +72,7 @@ class Post:
             "id": str(post_doc.get("_id")),
             "title": post_doc.get("title"),
             "content": post_doc.get("content"),
+            "topic": post_doc.get("topic") or "Technology",
             "author_id": str(post_doc.get("author_id")),
             "author": author.get("username") if author else None,
             "comments_count": comments_count,

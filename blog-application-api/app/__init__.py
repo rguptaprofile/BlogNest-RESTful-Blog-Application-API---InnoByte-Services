@@ -55,10 +55,11 @@ def create_app(config_name=None):
     cors.init_app(app)
 
     # Register blueprints
-    from app.routes import auth_bp, posts_bp, comments_bp
+    from app.routes import auth_bp, posts_bp, comments_bp, dashboard_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(posts_bp)
     app.register_blueprint(comments_bp)
+    app.register_blueprint(dashboard_bp)
 
     # Root route: serves frontend web application to browser, JSON to API clients
     @app.route("/", methods=["GET"])

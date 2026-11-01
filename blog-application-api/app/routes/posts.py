@@ -69,10 +69,13 @@ def create_post():
     if not is_valid:
         return error_response(err_msg, 400)
 
+    from app.services.dashboard_service import DashboardService
+    topic = str(data.get("topic", "")).strip() or DashboardService.classify_topic(data["title"], data["content"])
     post_doc = Post.create(
         title=str(data["title"]).strip(),
         content=str(data["content"]).strip(),
         author_id=current_user_id,
+        topic=topic,
     )
 
     return success_response(
@@ -108,6 +111,8 @@ def update_post(post_id: str):
         updates["title"] = str(data["title"]).strip()
     if "content" in data:
         updates["content"] = str(data["content"]).strip()
+    if "topic" in data:
+        updates["topic"] = str(data["topic"]).strip()
 
     if not updates:
         return error_response("No valid fields provided for update.", 400)

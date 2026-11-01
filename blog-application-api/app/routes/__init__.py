@@ -1,5 +1,6 @@
 from .auth import auth_bp
 from .posts import posts_bp
 from .comments import comments_bp
+from .dashboard import dashboard_bp
 
-__all__ = ["auth_bp", "posts_bp", "comments_bp"]
+__all__ = ["auth_bp", "posts_bp", "comments_bp", "dashboard_bp"]

@@ -351,49 +351,52 @@
               </div>
             </div>
 
-            <!-- Widget 3: Who to Follow (Featured Contributors) -->
+            <!-- Widget 3: Featured Contributing Authors -->
             <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-4">Who to Follow</h3>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">Featured Writers</h3>
+                <span class="text-[10px] text-slate-400">Authors</span>
+              </div>
               <div class="space-y-3.5">
                 <!-- Author 1 -->
                 <div class="flex items-center justify-between gap-3">
-                  <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="filterByAuthor('elena_tech')">
                     <div class="w-8 h-8 rounded-full bg-indigo-900 text-white flex items-center justify-center font-bold text-xs shrink-0">E</div>
                     <div class="min-w-0">
-                      <h4 class="text-xs font-semibold text-slate-900 truncate">@elena_tech</h4>
+                      <h4 class="text-xs font-semibold text-slate-900 hover:text-indigo-600 transition truncate">@elena_tech</h4>
                       <p class="text-[10px] text-slate-400 truncate">Database & Systems Engineer</p>
                     </div>
                   </div>
-                  <button onclick="toggleFollowAuthor('elena_tech', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
-                    Follow
+                  <button onclick="filterByAuthor('elena_tech')" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Stories
                   </button>
                 </div>
 
                 <!-- Author 2 -->
                 <div class="flex items-center justify-between gap-3">
-                  <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="filterByAuthor('marcus_vance')">
                     <div class="w-8 h-8 rounded-full bg-emerald-900 text-white flex items-center justify-center font-bold text-xs shrink-0">M</div>
                     <div class="min-w-0">
-                      <h4 class="text-xs font-semibold text-slate-900 truncate">@marcus_vance</h4>
+                      <h4 class="text-xs font-semibold text-slate-900 hover:text-emerald-600 transition truncate">@marcus_vance</h4>
                       <p class="text-[10px] text-slate-400 truncate">Cloud Systems Architect</p>
                     </div>
                   </div>
-                  <button onclick="toggleFollowAuthor('marcus_vance', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
-                    Follow
+                  <button onclick="filterByAuthor('marcus_vance')" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Stories
                   </button>
                 </div>
 
                 <!-- Author 3 -->
                 <div class="flex items-center justify-between gap-3">
-                  <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="filterByAuthor('alex_river')">
                     <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">A</div>
                     <div class="min-w-0">
-                      <h4 class="text-xs font-semibold text-slate-900 truncate">@alex_river</h4>
+                      <h4 class="text-xs font-semibold text-slate-900 hover:text-slate-700 transition truncate">@alex_river</h4>
                       <p class="text-[10px] text-slate-400 truncate">API Security & Auth Scribe</p>
                     </div>
                   </div>
-                  <button onclick="toggleFollowAuthor('alex_river', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
-                    Follow
+                  <button onclick="filterByAuthor('alex_river')" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Stories
                   </button>
                 </div>
               </div>
@@ -412,8 +415,8 @@
 
             <!-- Widget 5: Write on BlogNest Box -->
             <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Write on BlogNest</h4>
-              <p class="text-xs text-slate-500 mt-1.5 mb-3.5">Reach 10,000+ software developers and architects with zero algorithmic gatekeeping.</p>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Publish on BlogNest</h4>
+              <p class="text-xs text-slate-500 mt-1.5 mb-3.5">Draft technical deep-dives, architectural essays, and tutorials with clean typography, distraction-free reading, and full author ownership.</p>
               <button onclick="openPostModal()" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition shadow-sm">
                 Start Writing Today
               </button>
@@ -494,145 +497,194 @@
       </div>
     </section>
 
-    <!-- 6. Platform Momentum & Metrics Banner -->
-    <section class="border-t border-slate-200 bg-white py-10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div class="space-y-1">
-            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">10,000+</span>
-            <p class="text-xs text-slate-500 font-medium">Active Readers Worldwide</p>
-          </div>
-          <div class="space-y-1">
-            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">2,500+</span>
-            <p class="text-xs text-slate-500 font-medium">Published Engineering Stories</p>
-          </div>
-          <div class="space-y-1">
-            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">18,000+</span>
-            <p class="text-xs text-slate-500 font-medium">Responses & Reader Applauses</p>
-          </div>
-          <div class="space-y-1">
-            <span class="text-3xl sm:text-4xl font-serif font-bold text-emerald-600">99.98%</span>
-            <p class="text-xs text-slate-500 font-medium">REST API Uptime & Health</p>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
   <!-- ======================================================== -->
-  <!-- VIEW 2: PERSONALIZED USER DASHBOARD                      -->
+  <!-- VIEW 2: AUTHENTIC BLOGGING DASHBOARD (AUTHOR STUDIO)     -->
   <!-- ======================================================== -->
   <div id="view-dashboard" class="hidden flex-1 flex flex-col">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
       
-      <!-- Dashboard User Header Card -->
-      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm mb-8">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <!-- Top Breadcrumb & Actions Bar -->
+      <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
+        <div class="flex items-center gap-2 text-xs">
+          <button onclick="switchMainView('feed')" class="text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5 font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span>Back to Stories Feed</span>
+          </button>
+          <span class="text-slate-300">/</span>
+          <span class="font-bold text-slate-900">Author Dashboard</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="loadUserDashboardData()" id="dash-refresh-btn-wrap" class="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl border border-slate-200 transition" title="Refresh Dashboard">
+            <svg id="dash-refresh-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          </button>
+          <button onclick="openPostModal()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-sm transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>Write New Story</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Author Profile & Real Metrics Summary Card -->
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
           <div class="flex items-center gap-4">
-            <div id="dash-avatar" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-slate-900 to-indigo-900 text-white flex items-center justify-center font-bold text-2xl shadow-md">
+            <div id="dash-avatar" class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-xl shadow-sm shrink-0">
               U
             </div>
             <div>
               <div class="flex items-center gap-2.5">
-                <h1 id="dash-username" class="text-2xl font-bold font-serif text-slate-900">@username</h1>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Active Author</span>
+                <h1 id="dash-username" class="text-xl sm:text-2xl font-bold font-serif text-slate-900">@username</h1>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  Verified Author
+                </span>
               </div>
-              <p id="dash-email" class="text-xs text-slate-500 mt-0.5">user@example.com</p>
-              <div class="flex items-center gap-2 mt-2 text-[11px] text-slate-400">
-                <span>User ID: <code id="dash-user-id" class="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">...</code></span>
-                <span>•</span>
+              <p id="dash-email" class="text-xs text-slate-500 mt-0.5">author@example.com</p>
+              <div class="flex items-center gap-2 mt-1.5 text-[11px] text-slate-400">
                 <span id="dash-member-since">Member</span>
+                <span>•</span>
+                <span>MongoDB ObjectId: <code id="dash-user-id" class="font-mono text-slate-600 bg-slate-100 px-1 py-0.5 rounded">...</code></span>
               </div>
             </div>
           </div>
-
-          <!-- Quick Action Buttons -->
-          <div class="flex items-center gap-2.5 w-full sm:w-auto">
-            <button onclick="openPostModal()" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-sm transition">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-              <span>New Story</span>
-            </button>
-            <button onclick="loadUserDashboardData()" class="p-2 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl transition" title="Refresh Dashboard">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            </button>
-          </div>
         </div>
 
-        <!-- Metric Summary Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-slate-100">
-          <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-100">
-            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Stories Published</span>
+        <!-- 4 Real Database-Derived Metric Tiles (No fake numbers!) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div class="p-3.5 bg-slate-50/70 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Your Stories</span>
             <div id="stat-my-stories" class="text-2xl font-bold font-serif text-slate-900 mt-1">0</div>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Published articles</span>
           </div>
-          <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-100">
-            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Responses Received</span>
+
+          <div class="p-3.5 bg-slate-50/70 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Words Written</span>
+            <div id="stat-my-words" class="text-2xl font-bold font-serif text-slate-900 mt-1">0</div>
+            <span id="stat-my-read-time" class="text-[10px] text-slate-400 mt-0.5 block">~0 min reading time</span>
+          </div>
+
+          <div class="p-3.5 bg-slate-50/70 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Story Responses</span>
             <div id="stat-my-received-comments" class="text-2xl font-bold font-serif text-slate-900 mt-1">0</div>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Reader comments received</span>
           </div>
-          <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-100">
-            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Responses Written</span>
+
+          <div class="p-3.5 bg-slate-50/70 rounded-xl border border-slate-100">
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Your Comments</span>
             <div id="stat-my-written-comments" class="text-2xl font-bold font-serif text-slate-900 mt-1">0</div>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Comments left on stories</span>
           </div>
         </div>
       </div>
 
-      <!-- Dashboard Navigation Tabs -->
-      <div class="flex items-center gap-6 border-b border-slate-200 mb-6 text-xs font-semibold">
-        <button id="dash-tab-stories" onclick="switchDashboardTab('stories')" class="pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5">
-          <span>My Stories</span>
+      <!-- Dashboard Management Tabs (Only the core management sections!) -->
+      <div class="flex items-center gap-2 sm:gap-6 border-b border-slate-200 mb-6 text-xs font-semibold">
+        <button id="dash-tab-stories" onclick="switchDashboardTab('stories')" class="pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5 shrink-0">
+          <span>Manage Stories</span>
           <span id="dash-badge-stories" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px]">0</span>
         </button>
-        <button id="dash-tab-comments" onclick="switchDashboardTab('comments')" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition flex items-center gap-1.5">
-          <span>My Responses</span>
+        <button id="dash-tab-comments" onclick="switchDashboardTab('comments')" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition flex items-center gap-1.5 shrink-0">
+          <span>Manage Comments</span>
           <span id="dash-badge-comments" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px]">0</span>
         </button>
-        <button id="dash-tab-account" onclick="switchDashboardTab('account')" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition">
-          Account Details
+        <button id="dash-tab-account" onclick="switchDashboardTab('account')" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition shrink-0">
+          Account & Profile
         </button>
       </div>
 
-      <!-- Tab Content 1: My Stories -->
+      <!-- Tab Content 1: Manage Stories (CRUD: Create, Read, Update, Delete) -->
       <div id="dash-content-stories" class="space-y-4">
+        <div class="flex items-center justify-between text-xs text-slate-500 pb-1">
+          <span>Your published stories on BlogNest:</span>
+          <button onclick="openPostModal()" class="font-semibold text-slate-900 hover:underline flex items-center gap-1">
+            <span>+ Draft another story</span>
+          </button>
+        </div>
         <div id="dash-stories-list" class="space-y-4"></div>
-        <div id="dash-stories-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6">
-          <p class="text-xs text-slate-500">You haven't published any stories yet.</p>
-          <button onclick="openPostModal()" class="mt-3 px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition">
+        <div id="dash-stories-empty" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-6">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3 text-xl">✍️</div>
+          <h3 class="text-sm font-semibold text-slate-800">You haven't published any stories yet</h3>
+          <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Share your engineering insights, architectural patterns, or tutorials with BlogNest readers.</p>
+          <button onclick="openPostModal()" class="mt-4 px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition shadow-sm">
             Write your first story
           </button>
         </div>
       </div>
 
-      <!-- Tab Content 2: My Responses (Comments) -->
-      <div id="dash-content-comments" class="hidden space-y-4">
-        <div id="dash-comments-list" class="space-y-3"></div>
-        <div id="dash-comments-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6">
-          <p class="text-xs text-slate-500">You haven't commented on any stories yet.</p>
-          <button onclick="switchMainView('feed')" class="mt-3 px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-full transition">
-            Explore stories & join discussions
+      <!-- Tab Content 2: Manage Comments (Received Comments & Authored Comments Moderation) -->
+      <div id="dash-content-comments" class="hidden space-y-5">
+        
+        <!-- Sub-navigation between Received Comments & Written Comments -->
+        <div class="bg-slate-100 p-1 rounded-xl inline-flex items-center text-xs font-medium">
+          <button id="dash-comments-filter-received" onclick="toggleCommentsFilter('received')" class="px-3.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-xs transition">
+            Comments on Your Stories (<span id="dash-comments-count-received">0</span>)
           </button>
+          <button id="dash-comments-filter-written" onclick="toggleCommentsFilter('written')" class="px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition">
+            Comments You Wrote (<span id="dash-comments-count-written">0</span>)
+          </button>
+        </div>
+
+        <!-- Section A: Comments Received on User's Stories (with Author Moderation/Delete capability) -->
+        <div id="dash-comments-received-container" class="space-y-3">
+          <p class="text-xs text-slate-500">Reader discussions on your stories. As the author, you have moderation rights to remove inappropriate responses:</p>
+          <div id="dash-comments-received-list" class="space-y-3"></div>
+          <div id="dash-comments-received-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6">
+            <p class="text-xs text-slate-500">No reader comments received on your stories yet.</p>
+          </div>
+        </div>
+
+        <!-- Section B: Comments Authored by User -->
+        <div id="dash-comments-written-container" class="hidden space-y-3">
+          <p class="text-xs text-slate-500">Comments you have published across BlogNest stories:</p>
+          <div id="dash-comments-written-list" class="space-y-3"></div>
+          <div id="dash-comments-written-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6">
+            <p class="text-xs text-slate-500">You haven't left any comments yet.</p>
+            <button onclick="switchMainView('feed')" class="mt-2 text-xs font-semibold text-slate-900 underline">Explore stories & join discussions</button>
+          </div>
         </div>
       </div>
 
-      <!-- Tab Content 3: Account Details -->
-      <div id="dash-content-account" class="hidden">
-        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-6">
-          <h3 class="text-base font-bold font-serif text-slate-900">Account Credentials & Security</h3>
+      <!-- Tab Content 3: Account & Profile Details -->
+      <div id="dash-content-account" class="hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-base font-bold font-serif text-slate-900">Account Profile & Security</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Your credentials, database identity, and verified session</p>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Active JWT Session
+            </span>
+          </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block font-medium">Username</span>
-              <span id="account-detail-username" class="font-bold text-slate-800 mt-1 block">...</span>
+              <span class="text-slate-400 block font-medium">Author Handle</span>
+              <span id="account-detail-username" class="font-bold text-slate-900 text-sm mt-1 block">...</span>
             </div>
+
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
               <span class="text-slate-400 block font-medium">Registered Email</span>
-              <span id="account-detail-email" class="font-bold text-slate-800 mt-1 block">...</span>
+              <span id="account-detail-email" class="font-bold text-slate-900 text-sm mt-1 block">...</span>
             </div>
+
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block font-medium">Database Identity (ObjectId)</span>
-              <span id="account-detail-id" class="font-mono text-slate-700 mt-1 block break-all">...</span>
+              <span class="text-slate-400 block font-medium">MongoDB Document Identifier (_id)</span>
+              <span id="account-detail-id" class="font-mono text-slate-700 text-xs mt-1 block break-all">...</span>
             </div>
+
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block font-medium">Authentication Session</span>
-              <span class="font-bold text-emerald-600 mt-1 block">JWT Verified & Active</span>
+              <span class="text-slate-400 block font-medium">API Documentation</span>
+              <a href="/docs" target="_blank" class="font-semibold text-indigo-600 hover:underline text-xs mt-1 block">Interactive Swagger UI &rarr;</a>
             </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-slate-400">Authenticated via Bearer Token</span>
+            <button onclick="logout()" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl font-semibold transition border border-rose-200/60">
+              Sign out of account
+            </button>
           </div>
         </div>
       </div>
@@ -746,10 +798,21 @@
       <form onsubmit="handlePostSubmit(event)" class="space-y-5">
         <input type="hidden" id="editor-post-id" />
         
-        <div>
-          <label class="block text-xs font-medium text-slate-500 mb-1">Story Title</label>
-          <input type="text" id="editor-title" required placeholder="Title your story..." 
-            class="w-full px-4 py-2.5 text-base font-serif font-medium border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Story Title</label>
+            <input type="text" id="editor-title" required placeholder="Title your story..." 
+              class="w-full px-4 py-2.5 text-base font-serif font-medium border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Topic / Category</label>
+            <select id="editor-topic" class="w-full px-3 py-2.5 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition">
+              <option value="Technology">Technology</option>
+              <option value="Python">Python</option>
+              <option value="Architecture">Architecture</option>
+              <option value="MongoDB">MongoDB</option>
+            </select>
+          </div>
         </div>
 
         <div>
@@ -840,7 +903,7 @@
               <div class="w-7 h-7 rounded-full bg-emerald-600 ring-2 ring-slate-900 flex items-center justify-center text-[10px] font-bold">AR</div>
               <div class="w-7 h-7 rounded-full bg-amber-600 ring-2 ring-slate-900 flex items-center justify-center text-[10px] font-bold">SK</div>
             </div>
-            <span class="text-[11px] text-slate-300 font-medium">10,000+ writers & readers</span>
+            <span class="text-[11px] text-slate-300 font-medium">Verified Editorial Community</span>
           </div>
           <span class="text-[10px] text-emerald-400 font-mono">REST API</span>
         </div>
@@ -1192,75 +1255,147 @@
       }
     }
 
-    // Dashboard Data Loading (Unique per User)
+    // ========================================================
+    // DASHBOARD DATA ENGINE (POWERED BY PYTHON DASHBOARD SERVICE)
+    // ========================================================
+    let currentDashboardPayload = null;
+
     async function loadUserDashboardData() {
-      if (!currentUser) return;
+      const token = getToken();
+      if (!token) {
+        switchMainView('feed');
+        return;
+      }
 
-      // Populate User Header
-      document.getElementById('dash-avatar').textContent = currentUser.username.charAt(0).toUpperCase();
-      document.getElementById('dash-username').textContent = `@${currentUser.username}`;
-      document.getElementById('dash-email').textContent = currentUser.email;
-      document.getElementById('dash-user-id').textContent = currentUser.id;
-      
-      const createdDate = currentUser.created_at ? new Date(currentUser.created_at).toLocaleDateString([], { month: 'short', year: 'numeric' }) : 'Recently';
-      document.getElementById('dash-member-since').textContent = `Member since ${createdDate}`;
-
-      document.getElementById('account-detail-username').textContent = currentUser.username;
-      document.getElementById('account-detail-email').textContent = currentUser.email;
-      document.getElementById('account-detail-id').textContent = currentUser.id;
+      const refreshIcon = document.getElementById('dash-refresh-icon');
+      if (refreshIcon) refreshIcon.classList.add('animate-spin');
 
       try {
-        // 1. Fetch stories authored by THIS user
-        const postsRes = await fetch(`/posts?author_id=${currentUser.id}&per_page=100`);
-        const postsData = await postsRes.json();
-        userPosts = postsData.posts || [];
+        // Fetch user dashboard analytics computed entirely in Python
+        const dashRes = await fetch('/api/dashboard/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
 
-        // 2. Fetch comments written by THIS user
-        const commentsRes = await fetch(`/comments?author_id=${currentUser.id}&per_page=100`);
-        const commentsData = await commentsRes.json();
-        userComments = commentsData.comments || [];
+        if (!dashRes.ok) {
+          if (dashRes.status === 401) {
+            logout();
+            return;
+          }
+          throw new Error('Failed to load dashboard data from Python backend');
+        }
 
-        // Calculate received responses
-        const receivedCommentsCount = userPosts.reduce((acc, p) => acc + (p.comments_count || 0), 0);
+        const data = await dashRes.json();
+        currentDashboardPayload = data.dashboard;
 
-        // Update stats
-        document.getElementById('stat-my-stories').textContent = userPosts.length;
-        document.getElementById('stat-my-received-comments').textContent = receivedCommentsCount;
-        document.getElementById('stat-my-written-comments').textContent = userComments.length;
+        // Concurrently fetch global platform statistics
+        fetchPlatformMetrics();
 
-        document.getElementById('dash-badge-stories').textContent = userPosts.length;
-        document.getElementById('dash-badge-comments').textContent = userComments.length;
-
-        renderDashboardStories(userPosts);
-        renderDashboardComments(userComments);
+        // Bind server-computed data to DOM
+        renderDashboardData(currentDashboardPayload);
       } catch (err) {
-        showToast('Error loading your dashboard data', 'error');
+        showToast(err.message || 'Error updating dashboard', 'error');
+      } finally {
+        if (refreshIcon) {
+          setTimeout(() => refreshIcon.classList.remove('animate-spin'), 350);
+        }
       }
     }
 
+    async function fetchPlatformMetrics() {
+      try {
+        const res = await fetch('/api/dashboard/platform');
+        if (!res.ok) return;
+        const data = await res.json();
+        const plat = data.platform;
+        if (!plat) return;
+
+        const uEl = document.getElementById('platform-users-count');
+        const pEl = document.getElementById('platform-posts-count');
+        const cEl = document.getElementById('platform-comments-count');
+        if (uEl) uEl.textContent = plat.total_users;
+        if (pEl) pEl.textContent = plat.total_posts;
+        if (cEl) cEl.textContent = plat.total_comments;
+      } catch (e) {
+        // Non-critical background telemetry
+      }
+    }
+
+    function renderDashboardData(dash) {
+      if (!dash) return;
+      const u = dash.user;
+      const m = dash.metrics;
+      const s = dash.system;
+
+      // 1. Author Header Card (Authentic user data from MongoDB)
+      document.getElementById('dash-avatar').textContent = u.username.charAt(0).toUpperCase();
+      document.getElementById('dash-username').textContent = `@${u.username}`;
+      document.getElementById('dash-email').textContent = u.email;
+      document.getElementById('dash-user-id').textContent = u.id;
+      document.getElementById('dash-member-since').textContent = `Member since ${u.member_since}`;
+
+      // 2. Metrics 4-Card Summary (Derived directly from live DB data)
+      document.getElementById('stat-my-stories').textContent = m.total_stories;
+      document.getElementById('stat-my-words').textContent = m.total_words.toLocaleString();
+      document.getElementById('stat-my-read-time').textContent = `~${m.total_reading_time_minutes} min reading time`;
+      document.getElementById('stat-my-received-comments').textContent = m.total_responses_received;
+      document.getElementById('stat-my-written-comments').textContent = m.total_responses_written;
+
+      // Badges on tabs
+      document.getElementById('dash-badge-stories').textContent = m.total_stories;
+      const totalCommentsCount = (m.total_responses_received || 0) + (m.total_responses_written || 0);
+      document.getElementById('dash-badge-comments').textContent = totalCommentsCount;
+
+      const receivedCountEl = document.getElementById('dash-comments-count-received');
+      const writtenCountEl = document.getElementById('dash-comments-count-written');
+      if (receivedCountEl) receivedCountEl.textContent = (dash.received_comments || []).length;
+      if (writtenCountEl) writtenCountEl.textContent = (dash.comments || []).length;
+
+      // 3. Tab Contents
+      renderDashboardStories(dash.stories || []);
+      renderDashboardComments(dash.comments || [], dash.received_comments || []);
+
+      // 4. Account tab
+      document.getElementById('account-detail-username').textContent = u.username;
+      document.getElementById('account-detail-email').textContent = u.email;
+      document.getElementById('account-detail-id').textContent = u.id;
+    }
+
     function switchDashboardTab(tab) {
-      const tabStories = document.getElementById('dash-tab-stories');
-      const tabComments = document.getElementById('dash-tab-comments');
-      const tabAccount = document.getElementById('dash-tab-account');
-
-      const contentStories = document.getElementById('dash-content-stories');
-      const contentComments = document.getElementById('dash-content-comments');
-      const contentAccount = document.getElementById('dash-content-account');
-
-      [tabStories, tabComments, tabAccount].forEach(t => {
-        t.className = "pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition flex items-center gap-1.5";
+      const tabs = ['stories', 'comments', 'account'];
+      
+      tabs.forEach(t => {
+        const btn = document.getElementById(`dash-tab-${t}`);
+        const content = document.getElementById(`dash-content-${t}`);
+        if (btn) {
+          btn.className = (t === tab)
+            ? "pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5 shrink-0"
+            : "pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition flex items-center gap-1.5 shrink-0";
+        }
+        if (content) {
+          if (t === tab) content.classList.remove('hidden');
+          else content.classList.add('hidden');
+        }
       });
-      [contentStories, contentComments, contentAccount].forEach(c => c.classList.add('hidden'));
+    }
 
-      if (tab === 'stories') {
-        tabStories.className = "pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5";
-        contentStories.classList.remove('hidden');
-      } else if (tab === 'comments') {
-        tabComments.className = "pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5";
-        contentComments.classList.remove('hidden');
-      } else if (tab === 'account') {
-        tabAccount.className = "pb-3 border-b-2 border-slate-900 text-slate-900 transition flex items-center gap-1.5";
-        contentAccount.classList.remove('hidden');
+    let activeCommentsFilter = 'received';
+    function toggleCommentsFilter(type) {
+      activeCommentsFilter = type;
+      const btnRecv = document.getElementById('dash-comments-filter-received');
+      const btnWrit = document.getElementById('dash-comments-filter-written');
+      const contRecv = document.getElementById('dash-comments-received-container');
+      const contWrit = document.getElementById('dash-comments-written-container');
+
+      if (type === 'received') {
+        if (btnRecv) btnRecv.className = "px-3.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-xs transition";
+        if (btnWrit) btnWrit.className = "px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition";
+        if (contRecv) contRecv.classList.remove('hidden');
+        if (contWrit) contWrit.classList.add('hidden');
+      } else {
+        if (btnRecv) btnRecv.className = "px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition";
+        if (btnWrit) btnWrit.className = "px-3.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-xs transition";
+        if (contRecv) contRecv.classList.add('hidden');
+        if (contWrit) contWrit.classList.remove('hidden');
       }
     }
 
@@ -1276,33 +1411,46 @@
 
       empty.classList.add('hidden');
       list.innerHTML = posts.map(p => {
-        const words = p.content ? p.content.split(/\s+/).length : 0;
-        const readTime = Math.max(1, Math.ceil(words / 200));
-        const dateStr = new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+        const topicColor = p.topic === 'Python' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+          (p.topic === 'MongoDB' ? 'bg-green-50 text-green-800 border-green-200' :
+          (p.topic === 'Architecture' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-100 text-slate-700 border-slate-200'));
 
         return `
-          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 hover:border-slate-300 transition shadow-sm hover:shadow flex flex-col md:flex-row md:items-center justify-between gap-5 group">
             <div class="flex-1 cursor-pointer" onclick="openReaderModal('${p.id}')">
-              <h4 class="text-base font-serif font-bold text-slate-900 hover:text-slate-700 transition leading-snug">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold border ${topicColor}">
+                  ${escapeHtml(p.topic || 'Technology')}
+                </span>
+                <span class="text-[11px] text-slate-400">•</span>
+                <span class="text-[11px] text-slate-400 font-medium">${p.relative_time}</span>
+              </div>
+              
+              <h4 class="text-base sm:text-lg font-serif font-bold text-slate-900 group-hover:text-slate-700 transition leading-snug">
                 ${escapeHtml(p.title)}
               </h4>
-              <div class="flex items-center gap-3 text-xs text-slate-400 mt-2">
-                <span>Published ${dateStr}</span>
+              
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed font-sans">
+                ${escapeHtml(p.snippet)}
+              </p>
+
+              <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+                <span>📖 ${p.word_count} words</span>
                 <span>•</span>
-                <span>${readTime} min read</span>
+                <span>⏱️ ${p.reading_time_minutes} min read</span>
                 <span>•</span>
-                <span class="text-slate-600 font-medium">💬 ${p.comments_count || 0} responses</span>
+                <span class="text-slate-700 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">💬 ${p.comments_count} reader responses</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
-              <button onclick="openReaderModal('${p.id}')" class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition">
-                View
+            <div class="flex items-center gap-2 shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+              <button onclick="openReaderModal('${p.id}')" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition" title="Read story">
+                Read
               </button>
-              <button onclick="openPostModal(${escapeJsonForAttr(p)})" class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition">
+              <button onclick="openPostModal(${escapeJsonForAttr(p)})" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition" title="Edit story">
                 Edit
               </button>
-              <button onclick="deleteStory('${p.id}')" class="px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-lg transition">
+              <button onclick="deleteStory('${p.id}')" class="px-3.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200/60 rounded-lg transition" title="Delete story">
                 Delete
               </button>
             </div>
@@ -1311,35 +1459,119 @@
       }).join('');
     }
 
-    function renderDashboardComments(comments) {
-      const list = document.getElementById('dash-comments-list');
-      const empty = document.getElementById('dash-comments-empty');
+    function renderDashboardComments(writtenComments, receivedComments) {
+      // 1. Comments received on author's stories
+      const recList = document.getElementById('dash-comments-received-list');
+      const recEmpty = document.getElementById('dash-comments-received-empty');
 
-      if (!comments || comments.length === 0) {
+      if (!receivedComments || receivedComments.length === 0) {
+        if (recList) recList.innerHTML = '';
+        if (recEmpty) recEmpty.classList.remove('hidden');
+      } else {
+        if (recEmpty) recEmpty.classList.add('hidden');
+        if (recList) {
+          recList.innerHTML = receivedComments.map(c => `
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-4 shadow-sm hover:border-slate-300 transition">
+              <div class="flex-1 cursor-pointer" onclick="openReaderModal('${c.post_id}')">
+                <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mb-1.5">
+                  <span class="font-bold text-slate-900">@${escapeHtml(c.author_name)}</span>
+                  <span>commented on:</span>
+                  <span class="font-serif font-bold text-slate-900 hover:text-indigo-600 transition truncate max-w-sm">
+                    "${escapeHtml(c.post_title)}"
+                  </span>
+                  <span>•</span>
+                  <span class="text-slate-400">${c.relative_time}</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 font-sans">
+                  ${escapeHtml(c.content)}
+                </p>
+              </div>
+              <div class="flex items-center gap-1 shrink-0 pt-1">
+                <button onclick="openReaderModal('${c.post_id}')" title="View in story" class="text-slate-400 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </button>
+                <button onclick="deleteComment('${c.id}')" title="Moderate/Delete comment" class="text-slate-300 hover:text-rose-600 p-2 rounded-lg hover:bg-rose-50 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // 2. Comments authored by the user
+      const writList = document.getElementById('dash-comments-written-list');
+      const writEmpty = document.getElementById('dash-comments-written-empty');
+
+      if (!writtenComments || writtenComments.length === 0) {
+        if (writList) writList.innerHTML = '';
+        if (writEmpty) writEmpty.classList.remove('hidden');
+      } else {
+        if (writEmpty) writEmpty.classList.add('hidden');
+        if (writList) {
+          writList.innerHTML = writtenComments.map(c => `
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-4 shadow-sm hover:border-slate-300 transition">
+              <div class="flex-1 cursor-pointer" onclick="openReaderModal('${c.post_id}')">
+                <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mb-1.5">
+                  <span class="font-semibold text-slate-700">You responded on:</span>
+                  <span class="font-serif font-bold text-slate-900 hover:text-indigo-600 transition truncate max-w-sm">
+                    "${escapeHtml(c.post_title)}"
+                  </span>
+                  <span>•</span>
+                  <span class="text-slate-400">${c.relative_time}</span>
+                </div>
+                <p class="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 font-sans">
+                  ${escapeHtml(c.content)}
+                </p>
+              </div>
+              <div class="flex items-center gap-1 shrink-0 pt-1">
+                <button onclick="openReaderModal('${c.post_id}')" title="View in story" class="text-slate-400 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </button>
+                <button onclick="deleteComment('${c.id}')" title="Delete your comment" class="text-slate-300 hover:text-rose-600 p-2 rounded-lg hover:bg-rose-50 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function filterByAuthor(authorName) {
+      switchMainView('feed');
+      const authorSearch = document.getElementById('header-search-input');
+      if (authorSearch) authorSearch.value = `@${authorName}`;
+      displayedPosts = allPosts.filter(p => (p.author || '').toLowerCase() === authorName.toLowerCase());
+      renderStoryList(displayedPosts);
+      window.scrollTo({ top: 350, behavior: 'smooth' });
+      showToast(`Showing articles authored by @${authorName}`);
+    }
+
+    function renderDashboardActivity(activity) {
+      const list = document.getElementById('dash-activity-list');
+      const empty = document.getElementById('dash-activity-empty');
+      if (!list) return;
+
+      if (!activity || activity.length === 0) {
         list.innerHTML = '';
-        empty.classList.remove('hidden');
+        if (empty) empty.classList.remove('hidden');
         return;
       }
 
-      empty.classList.add('hidden');
-      list.innerHTML = comments.map(c => {
-        const timeStr = formatTimeAgo(c.created_at);
-        return `
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 flex items-start justify-between gap-3 group">
-            <div class="flex-1 cursor-pointer" onclick="openReaderModal('${c.post_id}')">
-              <p class="text-xs text-slate-800 leading-relaxed">${escapeHtml(c.content)}</p>
-              <div class="flex items-center gap-2 mt-2 text-[11px] text-slate-400">
-                <span>On Story ID: <code class="font-mono">${c.post_id.substring(0, 8)}...</code></span>
-                <span>•</span>
-                <span>${timeStr}</span>
-              </div>
-            </div>
-            <button onclick="deleteComment('${c.id}')" title="Delete comment" class="text-slate-300 hover:text-rose-600 p-1.5 rounded transition">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-            </button>
+      if (empty) empty.classList.add('hidden');
+      list.innerHTML = activity.map(act => `
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50/70 border border-slate-100 hover:bg-slate-50 transition cursor-pointer" onclick="openReaderModal('${act.target_id}')">
+          <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-sm shadow-xs shrink-0">
+            ${act.icon}
           </div>
-        `;
-      }).join('');
+          <div class="flex-1 min-w-0">
+            <h5 class="text-xs font-semibold text-slate-900 truncate">${escapeHtml(act.title)}</h5>
+            <p class="text-[11px] text-slate-500 truncate mt-0.5">${escapeHtml(act.subtitle)}</p>
+          </div>
+          <span class="text-[10px] font-medium text-slate-400 shrink-0">${act.time}</span>
+        </div>
+      `).join('');
     }
 
     // Auth Modal Handlers & Interactivity
@@ -1610,6 +1842,7 @@
       const idInput = document.getElementById('editor-post-id');
       const titleInput = document.getElementById('editor-title');
       const contentInput = document.getElementById('editor-content');
+      const topicInput = document.getElementById('editor-topic');
       const submitBtn = document.getElementById('editor-submit-btn');
 
       if (post) {
@@ -1617,12 +1850,14 @@
         idInput.value = post.id;
         titleInput.value = post.title;
         contentInput.value = post.content;
+        if (topicInput) topicInput.value = post.topic || 'Technology';
         submitBtn.textContent = 'Save changes';
       } else {
         titleEl.textContent = 'Draft a Story';
         idInput.value = '';
         titleInput.value = '';
         contentInput.value = '';
+        if (topicInput) topicInput.value = 'Technology';
         submitBtn.textContent = 'Publish Story';
       }
       updateEditorWordCount();
@@ -1647,6 +1882,8 @@
       const editId = document.getElementById('editor-post-id').value;
       const title = document.getElementById('editor-title').value.trim();
       const content = document.getElementById('editor-content').value.trim();
+      const topicEl = document.getElementById('editor-topic');
+      const topic = topicEl ? topicEl.value : 'Technology';
       const token = getToken();
 
       const url = editId ? `/posts/${editId}` : '/posts';
@@ -1659,7 +1896,7 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ title, content })
+          body: JSON.stringify({ title, content, topic })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to save post');
