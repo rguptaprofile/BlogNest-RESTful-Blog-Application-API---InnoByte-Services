@@ -75,6 +75,8 @@ class Post:
             "topic": post_doc.get("topic") or "Technology",
             "author_id": str(post_doc.get("author_id")),
             "author": author.get("username") if author else None,
+            "author_avatar": author.get("avatar_url") if author else None,
+            "author_bio": author.get("bio") if author else None,
             "comments_count": comments_count,
             "created_at": created_at.isoformat() if hasattr(created_at, "isoformat") else str(created_at or ""),
             "updated_at": updated_at.isoformat() if hasattr(updated_at, "isoformat") else str(updated_at or ""),

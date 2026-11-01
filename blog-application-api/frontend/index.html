@@ -113,7 +113,7 @@
           <!-- User Pill -->
           <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
             <button onclick="switchMainView('dashboard')" title="View Dashboard" class="flex items-center gap-1.5 group">
-              <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-900 to-indigo-900 text-white flex items-center justify-center font-bold text-xs ring-2 ring-slate-100 shadow-sm group-hover:ring-slate-300 transition">
+              <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-900 to-indigo-900 text-white flex items-center justify-center font-bold text-xs ring-2 ring-slate-100 shadow-sm group-hover:ring-slate-300 transition overflow-hidden">
                 U
               </div>
               <span id="user-display-name" class="text-xs font-semibold text-slate-700 hidden md:inline group-hover:text-slate-900 transition">User</span>
@@ -226,7 +226,7 @@
             </p>
 
             <div class="flex items-center gap-3 pt-2 text-xs text-slate-300">
-              <div id="featured-avatar" class="w-7 h-7 rounded-full bg-indigo-600 ring-2 ring-white/20 flex items-center justify-center font-bold text-white text-[10px]">
+              <div id="featured-avatar" class="w-7 h-7 rounded-full bg-indigo-600 ring-2 ring-white/20 flex items-center justify-center font-bold text-white text-[10px] overflow-hidden">
                 M
               </div>
               <span id="featured-author" class="font-medium text-white">@marcus_vance</span>
@@ -530,7 +530,7 @@
       <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm mb-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
           <div class="flex items-center gap-4">
-            <div id="dash-avatar" class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-xl shadow-sm shrink-0">
+            <div id="dash-avatar" class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-xl shadow-sm shrink-0 overflow-hidden ring-2 ring-slate-200">
               U
             </div>
             <div>
@@ -541,6 +541,7 @@
                 </span>
               </div>
               <p id="dash-email" class="text-xs text-slate-500 mt-0.5">author@example.com</p>
+              <p id="dash-bio" class="text-xs text-slate-600 mt-1 italic hidden"></p>
               <div class="flex items-center gap-2 mt-1.5 text-[11px] text-slate-400">
                 <span id="dash-member-since">Member</span>
                 <span>•</span>
@@ -647,10 +648,107 @@
 
       <!-- Tab Content 3: Account & Profile Details -->
       <div id="dash-content-account" class="hidden space-y-6">
+
+        <!-- Card 1: Author Profile Picture & Public Customization -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-base font-bold font-serif text-slate-900">Author Public Profile & Picture</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Customize your profile photo, author handle, and bio seen across your articles and comments</p>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+              Public Identity
+            </span>
+          </div>
+
+          <!-- Profile Picture Studio -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 p-5 bg-slate-50/70 rounded-2xl border border-slate-100">
+            <!-- Avatar Preview with live upload icon -->
+            <div class="relative group shrink-0">
+              <div id="profile-avatar-preview" class="w-24 h-24 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-3xl shadow-md overflow-hidden ring-4 ring-white border border-slate-200">
+                U
+              </div>
+              <button onclick="document.getElementById('profile-file-input').click()" type="button" title="Upload from Device" class="absolute -bottom-2 -right-2 p-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-md transition hover:scale-105 border-2 border-white">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              </button>
+            </div>
+
+            <!-- Avatar Upload Options & Actions -->
+            <div class="flex-1 space-y-3 w-full">
+              <div>
+                <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Set Profile Picture</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Upload any photo from your computer, paste an image link, or choose from our writer presets.</p>
+              </div>
+
+              <!-- Action Buttons Row -->
+              <div class="flex flex-wrap items-center gap-2">
+                <input type="file" id="profile-file-input" accept="image/*" class="hidden" onchange="handleProfileFileUpload(event)">
+                <button type="button" onclick="document.getElementById('profile-file-input').click()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 rounded-xl text-xs font-semibold shadow-xs transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                  <span>Upload Photo</span>
+                </button>
+                <button type="button" onclick="clearProfilePicture()" class="px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-rose-600 transition">
+                  Reset to Initial
+                </button>
+              </div>
+
+              <!-- URL Input Option -->
+              <div class="flex items-center gap-2 pt-1">
+                <input type="url" id="profile-avatar-url-input" oninput="previewProfileAvatarUrl(this.value)" placeholder="Or paste image URL (e.g. GitHub, Gravatar, Unsplash)..." 
+                  class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-slate-800 transition" />
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="pt-1">
+                <span class="text-[10px] text-slate-400 uppercase font-semibold block mb-1.5">Or choose a quick writer portrait:</span>
+                <div class="flex items-center gap-2 overflow-x-auto pb-1">
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="Elena style">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="Alex style">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="Marcus style">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="John style">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="Sarah style">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                  <button type="button" onclick="setAvatarPreset('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80')" class="w-8 h-8 rounded-xl overflow-hidden border-2 border-transparent hover:border-slate-900 transition shrink-0 shadow-xs" title="David style">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80" class="w-full h-full object-cover">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bio & Tagline Input Form -->
+          <div class="space-y-4 pt-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Author Bio / Tagline</label>
+              <input type="text" id="profile-bio-input" placeholder="e.g. Distributed systems engineer & technical essayist writing about Python & MongoDB" 
+                class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-slate-800 transition" />
+              <p class="text-[11px] text-slate-400 mt-1">A short summary of your technical craft shown next to your publications.</p>
+            </div>
+
+            <!-- Save Profile Action -->
+            <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+              <span id="profile-save-status" class="text-xs text-emerald-600 font-medium"></span>
+              <button type="button" onclick="saveUserProfile()" id="profile-save-btn" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-sm transition">
+                Save Profile Changes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Account Credentials & Security Details -->
         <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
           <div class="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <h3 class="text-base font-bold font-serif text-slate-900">Account Profile & Security</h3>
+              <h3 class="text-base font-bold font-serif text-slate-900">Account Credentials & System Telemetry</h3>
               <p class="text-xs text-slate-500 mt-0.5">Your credentials, database identity, and verified session</p>
             </div>
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -687,6 +785,7 @@
             </button>
           </div>
         </div>
+
       </div>
 
     </div>
@@ -722,7 +821,7 @@
         <!-- Author Info Bar -->
         <div class="mt-6 flex items-center justify-between pb-6 border-b border-slate-100">
           <div class="flex items-center gap-3">
-            <div id="reader-author-avatar" class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm">A</div>
+            <div id="reader-author-avatar" class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm overflow-hidden">A</div>
             <div>
               <div class="flex items-center gap-2">
                 <span id="reader-author-name" class="text-sm font-semibold text-slate-900">Author Name</span>
@@ -1199,7 +1298,14 @@
         userNav.classList.remove('hidden');
         if (guestBanner) guestBanner.classList.add('hidden');
         document.getElementById('user-display-name').textContent = user.username;
-        document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+        const userAvatarEl = document.getElementById('user-avatar');
+        if (userAvatarEl) {
+          if (user.avatar_url) {
+            userAvatarEl.innerHTML = `<img src="${escapeHtml(user.avatar_url)}" class="w-full h-full object-cover">`;
+          } else {
+            userAvatarEl.textContent = user.username.charAt(0).toUpperCase();
+          }
+        }
         if (commentGate) commentGate.classList.add('hidden');
         if (commentForm) commentForm.classList.remove('hidden');
       } else {
@@ -1327,11 +1433,27 @@
       const s = dash.system;
 
       // 1. Author Header Card (Authentic user data from MongoDB)
-      document.getElementById('dash-avatar').textContent = u.username.charAt(0).toUpperCase();
+      const dashAvatarEl = document.getElementById('dash-avatar');
+      if (dashAvatarEl) {
+        if (u.avatar_url) {
+          dashAvatarEl.innerHTML = `<img src="${escapeHtml(u.avatar_url)}" class="w-full h-full object-cover">`;
+        } else {
+          dashAvatarEl.textContent = u.username.charAt(0).toUpperCase();
+        }
+      }
       document.getElementById('dash-username').textContent = `@${u.username}`;
       document.getElementById('dash-email').textContent = u.email;
       document.getElementById('dash-user-id').textContent = u.id;
       document.getElementById('dash-member-since').textContent = `Member since ${u.member_since}`;
+      const dashBioEl = document.getElementById('dash-bio');
+      if (dashBioEl) {
+        if (u.bio) {
+          dashBioEl.textContent = `“${u.bio}”`;
+          dashBioEl.classList.remove('hidden');
+        } else {
+          dashBioEl.classList.add('hidden');
+        }
+      }
 
       // 2. Metrics 4-Card Summary (Derived directly from live DB data)
       document.getElementById('stat-my-stories').textContent = m.total_stories;
@@ -1358,6 +1480,171 @@
       document.getElementById('account-detail-username').textContent = u.username;
       document.getElementById('account-detail-email').textContent = u.email;
       document.getElementById('account-detail-id').textContent = u.id;
+
+      // Profile Picture Studio fields in Account tab
+      const profilePreview = document.getElementById('profile-avatar-preview');
+      if (profilePreview) {
+        if (u.avatar_url) {
+          profilePreview.innerHTML = `<img src="${escapeHtml(u.avatar_url)}" class="w-full h-full object-cover">`;
+        } else {
+          profilePreview.textContent = u.username.charAt(0).toUpperCase();
+        }
+      }
+      const avatarUrlInput = document.getElementById('profile-avatar-url-input');
+      if (avatarUrlInput) {
+        avatarUrlInput.value = u.avatar_url || '';
+      }
+      const bioInput = document.getElementById('profile-bio-input');
+      if (bioInput) {
+        bioInput.value = u.bio || '';
+      }
+    }
+
+    // Profile Picture & Public Customization Functions
+    function handleProfileFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file', 'error');
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        showToast('Image is larger than 2MB. Please choose a smaller photo.', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        const previewEl = document.getElementById('profile-avatar-preview');
+        if (previewEl) {
+          previewEl.innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`;
+        }
+        const urlInput = document.getElementById('profile-avatar-url-input');
+        if (urlInput) {
+          urlInput.value = dataUrl;
+        }
+        showToast('Photo loaded! Click "Save Profile Changes" to apply.');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function previewProfileAvatarUrl(url) {
+      const previewEl = document.getElementById('profile-avatar-preview');
+      if (!previewEl) return;
+      const clean = (url || '').trim();
+      const fallback = (currentUser ? currentUser.username : 'U').charAt(0).toUpperCase();
+      if (clean) {
+        previewEl.innerHTML = `<img src="${escapeHtml(clean)}" class="w-full h-full object-cover" onerror="this.onerror=null; this.parentElement.textContent='${fallback}';">`;
+      } else {
+        previewEl.textContent = fallback;
+      }
+    }
+
+    function setAvatarPreset(url) {
+      const urlInput = document.getElementById('profile-avatar-url-input');
+      if (urlInput) urlInput.value = url;
+      previewProfileAvatarUrl(url);
+      showToast('Portrait preset chosen! Click "Save Profile Changes" to save.');
+    }
+
+    function clearProfilePicture() {
+      const fileInput = document.getElementById('profile-file-input');
+      if (fileInput) fileInput.value = '';
+      const urlInput = document.getElementById('profile-avatar-url-input');
+      if (urlInput) urlInput.value = '';
+      const previewEl = document.getElementById('profile-avatar-preview');
+      if (previewEl) {
+        previewEl.textContent = (currentUser ? currentUser.username : 'U').charAt(0).toUpperCase();
+      }
+      showToast('Profile photo reset to initial. Click "Save Profile Changes" to apply.');
+    }
+
+    async function saveUserProfile() {
+      if (!token) {
+        showToast('Please sign in to update your profile', 'error');
+        return;
+      }
+      const saveBtn = document.getElementById('profile-save-btn');
+      const statusEl = document.getElementById('profile-save-status');
+      const avatarUrlInput = document.getElementById('profile-avatar-url-input');
+      const bioInput = document.getElementById('profile-bio-input');
+
+      const avatarUrl = avatarUrlInput ? avatarUrlInput.value.trim() : '';
+      const bio = bioInput ? bioInput.value.trim() : '';
+
+      try {
+        if (saveBtn) {
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-3.5 w-3.5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg> Saving...`;
+        }
+
+        const res = await fetch('/api/auth/me', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ avatar_url: avatarUrl, bio: bio })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to update profile');
+        }
+
+        currentUser = data.user;
+        localStorage.setItem('user', JSON.stringify(currentUser));
+
+        // Update Navbar Avatar
+        updateAuthUI(currentUser);
+
+        // Update Dashboard Avatar & Bio
+        const dashAvatarEl = document.getElementById('dash-avatar');
+        if (dashAvatarEl) {
+          if (currentUser.avatar_url) {
+            dashAvatarEl.innerHTML = `<img src="${escapeHtml(currentUser.avatar_url)}" class="w-full h-full object-cover">`;
+          } else {
+            dashAvatarEl.textContent = currentUser.username.charAt(0).toUpperCase();
+          }
+        }
+        const dashBioEl = document.getElementById('dash-bio');
+        if (dashBioEl) {
+          if (currentUser.bio) {
+            dashBioEl.textContent = `“${currentUser.bio}”`;
+            dashBioEl.classList.remove('hidden');
+          } else {
+            dashBioEl.classList.add('hidden');
+          }
+        }
+
+        if (statusEl) {
+          statusEl.textContent = '✓ Profile & avatar updated successfully!';
+          statusEl.className = 'text-xs text-emerald-600 font-medium';
+          setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 4000);
+        }
+        showToast('Profile picture and bio saved successfully!');
+
+        // Refresh feed so author's published stories and comments show the new avatar
+        loadPosts();
+      } catch (err) {
+        if (statusEl) {
+          statusEl.textContent = `✗ ${err.message}`;
+          statusEl.className = 'text-xs text-rose-600 font-medium';
+        }
+        showToast(err.message, 'error');
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save Profile Changes';
+        }
+      }
     }
 
     function switchDashboardTab(tab) {
@@ -1473,14 +1760,19 @@
           recList.innerHTML = receivedComments.map(c => `
             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex items-start justify-between gap-4 shadow-sm hover:border-slate-300 transition">
               <div class="flex-1 cursor-pointer" onclick="openReaderModal('${c.post_id}')">
-                <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mb-1.5">
-                  <span class="font-bold text-slate-900">@${escapeHtml(c.author_name)}</span>
-                  <span>commented on:</span>
-                  <span class="font-serif font-bold text-slate-900 hover:text-indigo-600 transition truncate max-w-sm">
-                    "${escapeHtml(c.post_title)}"
-                  </span>
-                  <span>•</span>
-                  <span class="text-slate-400">${c.relative_time}</span>
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                    ${c.author_avatar ? `<img src="${escapeHtml(c.author_avatar)}" class="w-full h-full object-cover">` : escapeHtml(c.author_name).charAt(0).toUpperCase()}
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
+                    <span class="font-bold text-slate-900">@${escapeHtml(c.author_name)}</span>
+                    <span>commented on:</span>
+                    <span class="font-serif font-bold text-slate-900 hover:text-indigo-600 transition truncate max-w-sm">
+                      "${escapeHtml(c.post_title)}"
+                    </span>
+                    <span>•</span>
+                    <span class="text-slate-400">${c.relative_time}</span>
+                  </div>
                 </div>
                 <p class="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 font-sans">
                   ${escapeHtml(c.content)}
@@ -1947,7 +2239,14 @@
         currentStory = data.post;
         document.getElementById('reader-title').textContent = currentStory.title;
         document.getElementById('reader-author-name').textContent = `@${currentStory.author || 'Writer'}`;
-        document.getElementById('reader-author-avatar').textContent = (currentStory.author || 'W').charAt(0).toUpperCase();
+        const readerAvatarEl = document.getElementById('reader-author-avatar');
+        if (readerAvatarEl) {
+          if (currentStory.author_avatar) {
+            readerAvatarEl.innerHTML = `<img src="${escapeHtml(currentStory.author_avatar)}" class="w-full h-full object-cover">`;
+          } else {
+            readerAvatarEl.textContent = (currentStory.author || 'W').charAt(0).toUpperCase();
+          }
+        }
         
         const words = currentStory.content ? currentStory.content.split(/\s+/).length : 0;
         const readTime = Math.max(1, Math.ceil(words / 200));
@@ -2003,14 +2302,17 @@
       }
 
       container.innerHTML = comments.map(c => {
-        const isCommentAuthor = currentUser && String(c.author_id) === String(currentUser.id);
+        const canDelete = currentUser && (
+          String(c.author_id) === String(currentUser.id) ||
+          (currentStory && String(currentStory.author_id) === String(currentUser.id))
+        );
         const timeAgo = formatTimeAgo(c.created_at);
 
         return `
           <div class="p-4 bg-slate-50/80 rounded-xl border border-slate-100 flex items-start justify-between gap-3 group">
             <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
-                ${(c.author || 'U').charAt(0).toUpperCase()}
+              <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                ${c.author_avatar ? `<img src="${escapeHtml(c.author_avatar)}" class="w-full h-full object-cover">` : (c.author || 'U').charAt(0).toUpperCase()}
               </div>
               <div>
                 <div class="flex items-center gap-2">
@@ -2020,8 +2322,8 @@
                 <p class="text-xs text-slate-700 mt-1 leading-relaxed">${escapeHtml(c.content)}</p>
               </div>
             </div>
-            ${isCommentAuthor ? `
-              <button onclick="deleteComment('${c.id}')" title="Delete response" class="text-slate-300 hover:text-rose-600 p-1 rounded transition opacity-0 group-hover:opacity-100">
+            ${canDelete ? `
+              <button onclick="deleteComment('${c.id}')" title="Delete/Moderate response" class="text-slate-300 hover:text-rose-600 p-1 rounded transition opacity-0 group-hover:opacity-100">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
               </button>
             ` : ''}
@@ -2177,8 +2479,8 @@
             <span class="text-3xl font-serif font-black text-slate-200 group-hover:text-slate-900 transition shrink-0 select-none">${num}</span>
             <div class="space-y-1.5 flex-1 min-w-0">
               <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                <div class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[9px] shrink-0">
-                  ${author.charAt(0).toUpperCase()}
+                <div class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[9px] shrink-0 overflow-hidden">
+                  ${p.author_avatar ? `<img src="${escapeHtml(p.author_avatar)}" class="w-full h-full object-cover">` : author.charAt(0).toUpperCase()}
                 </div>
                 <span class="font-medium text-slate-800 truncate">@${author}</span>
               </div>
@@ -2218,7 +2520,13 @@
         snippetEl.textContent = cleanContent.length > 220 ? cleanContent.substring(0, 220) + '...' : cleanContent;
       }
       if (authorEl) authorEl.textContent = `@${feat.author || 'marcus_vance'}`;
-      if (avatarEl) avatarEl.textContent = (feat.author || 'M').charAt(0).toUpperCase();
+      if (avatarEl) {
+        if (feat.author_avatar) {
+          avatarEl.innerHTML = `<img src="${escapeHtml(feat.author_avatar)}" class="w-full h-full object-cover">`;
+        } else {
+          avatarEl.textContent = (feat.author || 'M').charAt(0).toUpperCase();
+        }
+      }
       const words = feat.content ? feat.content.split(/\s+/).length : 0;
       const readTime = Math.max(1, Math.ceil(words / 200));
       if (readTimeEl) readTimeEl.textContent = `${readTime} min read`;
@@ -2247,8 +2555,8 @@
         return `
           <div onclick="openReaderModal('${p.id}')" class="space-y-1.5 cursor-pointer group pb-3 border-b border-slate-100 last:border-none last:pb-0">
             <div class="flex items-center gap-2 text-[11px] text-slate-500">
-              <div class="w-4 h-4 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[8px]">
-                ${author.charAt(0).toUpperCase()}
+              <div class="w-4 h-4 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[8px] shrink-0 overflow-hidden">
+                ${p.author_avatar ? `<img src="${escapeHtml(p.author_avatar)}" class="w-full h-full object-cover">` : author.charAt(0).toUpperCase()}
               </div>
               <span class="font-medium text-slate-800">@${author}</span>
             </div>
@@ -2391,8 +2699,8 @@
             <div>
               <div class="flex items-center justify-between text-xs text-slate-500 mb-3">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                    ${authorName.charAt(0).toUpperCase()}
+                  <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm overflow-hidden">
+                    ${p.author_avatar ? `<img src="${escapeHtml(p.author_avatar)}" class="w-full h-full object-cover">` : authorName.charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <span class="font-semibold text-slate-900 block leading-tight">@${authorName}</span>

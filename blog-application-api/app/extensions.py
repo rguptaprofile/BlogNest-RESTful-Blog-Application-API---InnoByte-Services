@@ -203,6 +203,8 @@ class MongoDB:
             "username": "johndoe",
             "email": "john@example.com",
             "password": generate_password_hash("Password123!"),
+            "avatar_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80",
+            "bio": "Full-stack engineer & founding author at BlogNest. Passionate about Python, clean APIs, and systems design.",
             "created_at": now,
             "updated_at": now,
         })
@@ -213,6 +215,8 @@ class MongoDB:
             "username": "alex_river",
             "email": "alex@blognest.internal",
             "password": generate_password_hash("Password123!"),
+            "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80",
+            "bio": "API Security & authentication engineer. Exploring JWT architectures and backend hardening.",
             "created_at": now,
             "updated_at": now,
         })
@@ -223,6 +227,8 @@ class MongoDB:
             "username": "elena_tech",
             "email": "elena@techpress.io",
             "password": generate_password_hash("Password123!"),
+            "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80",
+            "bio": "Database architect & backend systems developer. Specializing in MongoDB indexing and zero-downtime schemas.",
             "created_at": now,
             "updated_at": now,
         })
@@ -233,6 +239,8 @@ class MongoDB:
             "username": "marcus_vance",
             "email": "marcus@cloudsystems.net",
             "password": generate_password_hash("Password123!"),
+            "avatar_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80",
+            "bio": "Distributed cloud architect. Designing microservices, event streams, and fault-tolerant infrastructure.",
             "created_at": now,
             "updated_at": now,
         })

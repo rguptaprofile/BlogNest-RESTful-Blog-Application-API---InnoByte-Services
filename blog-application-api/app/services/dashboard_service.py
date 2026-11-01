@@ -63,6 +63,8 @@ class DashboardService:
         user_id_str = str(user_doc["_id"])
         username = user_doc.get("username", "Author")
         email = user_doc.get("email", "")
+        avatar_url = user_doc.get("avatar_url", "")
+        bio = user_doc.get("bio", "")
         created_at = user_doc.get("created_at")
 
         # 1. Fetch user's posts
@@ -168,16 +170,19 @@ class DashboardService:
         user_post_titles = {str(p["_id"]): p.get("title", "Story") for p in user_posts}
         commenter_ids = list(set([c.get("author_id") for c in received_comments if c.get("author_id")]))
         commenter_map = {}
+        commenter_avatar_map = {}
         if commenter_ids:
             found_commenters = mongo.users.find({"_id": {"$in": [parse_object_id(cid) for cid in commenter_ids if parse_object_id(cid)]}})
             for fc in found_commenters:
                 commenter_map[str(fc["_id"])] = fc.get("username", "Reader")
+                commenter_avatar_map[str(fc["_id"])] = fc.get("avatar_url")
 
         for rc in received_comments:
             rc_id = str(rc["_id"])
             rc_pid = str(rc.get("post_id"))
             rc_author_id = str(rc.get("author_id"))
             rc_author_name = commenter_map.get(rc_author_id, "Reader")
+            rc_author_avatar = commenter_avatar_map.get(rc_author_id)
             rc_content = rc.get("content", "")
             rc_created = rc.get("created_at")
             rc_snippet = rc_content[:160] + "..." if len(rc_content) > 160 else rc_content
@@ -188,6 +193,7 @@ class DashboardService:
                 "post_title": user_post_titles.get(rc_pid, "Your Story"),
                 "author_id": rc_author_id,
                 "author_name": rc_author_name,
+                "author_avatar": rc_author_avatar,
                 "content": rc_content,
                 "snippet": rc_snippet,
                 "created_at": rc_created.isoformat() if hasattr(rc_created, "isoformat") else str(rc_created or ""),
@@ -248,6 +254,8 @@ class DashboardService:
                 "id": user_id_str,
                 "username": username,
                 "email": email,
+                "avatar_url": avatar_url,
+                "bio": bio,
                 "member_since": member_since,
                 "author_tier": author_tier,
                 "tier_badge": tier_badge,

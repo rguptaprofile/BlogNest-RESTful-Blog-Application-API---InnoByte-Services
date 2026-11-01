@@ -80,3 +80,39 @@ def get_current_user():
         return error_response("User not found.", 404)
 
     return success_response(data={"user": User.to_dict(user_doc)}, status_code=200)
+
+
+@auth_bp.route("/me", methods=["PUT", "PATCH"])
+@auth_bp.route("/api/auth/me", methods=["PUT", "PATCH"])
+@auth_bp.route("/api/users/profile", methods=["PUT", "PATCH"])
+@jwt_required()
+def update_profile():
+    """Update profile picture, bio, or username for currently authenticated user."""
+    user_id = str(get_jwt_identity())
+    user_doc = User.find_by_id(user_id)
+    if not user_doc:
+        return error_response("User not found.", 404)
+
+    data = request.get_json(silent=True) or {}
+    updates = {}
+    if "avatar_url" in data:
+        updates["avatar_url"] = str(data["avatar_url"]).strip()
+    if "bio" in data:
+        updates["bio"] = str(data["bio"]).strip()
+    if "username" in data:
+        new_uname = str(data["username"]).strip()
+        if new_uname and new_uname != user_doc.get("username"):
+            existing = User.find_by_username(new_uname)
+            if existing:
+                return error_response("Username already taken.", 409)
+            updates["username"] = new_uname
+
+    if not updates:
+        return error_response("No valid fields provided for update.", 400)
+
+    updated_user = User.update_by_id(user_id, updates)
+    return success_response(
+        data={"user": User.to_dict(updated_user)},
+        message="Profile picture and details updated successfully.",
+        status_code=200,
+    )

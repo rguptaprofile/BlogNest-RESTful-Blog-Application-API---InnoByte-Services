@@ -70,5 +70,6 @@ class Comment:
             "content": comment_doc.get("content"),
             "author_id": str(comment_doc.get("author_id")),
             "author": author.get("username") if author else None,
+            "author_avatar": author.get("avatar_url") if author else None,
             "created_at": created_at.isoformat() if hasattr(created_at, "isoformat") else str(created_at or ""),
         }

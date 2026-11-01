@@ -12,6 +12,8 @@ dashboard_bp = Blueprint("dashboard", __name__)
 
 @dashboard_bp.route("/api/dashboard/me", methods=["GET"])
 @dashboard_bp.route("/dashboard/me", methods=["GET"])
+@dashboard_bp.route("/api/dashboard", methods=["GET"])
+@dashboard_bp.route("/dashboard", methods=["GET"])
 @jwt_required()
 def get_my_dashboard():
     """Retrieve comprehensive server-computed dashboard metrics for authenticated author."""

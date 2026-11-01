@@ -17,12 +17,14 @@ class User:
     """MongoDB User Document Repository."""
 
     @staticmethod
-    def create(username: str, email: str, raw_password: str) -> dict:
+    def create(username: str, email: str, raw_password: str, avatar_url: str = "", bio: str = "") -> dict:
         now = datetime.now(timezone.utc)
         user_doc = {
             "username": username.strip(),
             "email": email.strip().lower(),
             "password": generate_password_hash(raw_password),
+            "avatar_url": avatar_url.strip(),
+            "bio": bio.strip(),
             "created_at": now,
             "updated_at": now,
         }
@@ -52,6 +54,15 @@ class User:
         return check_password_hash(user_doc["password"], raw_password)
 
     @staticmethod
+    def update_by_id(user_id, updates: dict):
+        oid = parse_object_id(user_id)
+        if not oid:
+            return None
+        updates["updated_at"] = datetime.now(timezone.utc)
+        mongo.users.update_one({"_id": oid}, {"$set": updates})
+        return mongo.users.find_one({"_id": oid})
+
+    @staticmethod
     def to_dict(user_doc: dict) -> dict:
         if not user_doc:
             return {}
@@ -61,6 +72,8 @@ class User:
             "id": str(user_doc.get("_id")),
             "username": user_doc.get("username"),
             "email": user_doc.get("email"),
+            "avatar_url": user_doc.get("avatar_url") or "",
+            "bio": user_doc.get("bio") or "",
             "created_at": created_at.isoformat() if hasattr(created_at, "isoformat") else str(created_at or ""),
             "updated_at": updated_at.isoformat() if hasattr(updated_at, "isoformat") else str(updated_at or ""),
         }

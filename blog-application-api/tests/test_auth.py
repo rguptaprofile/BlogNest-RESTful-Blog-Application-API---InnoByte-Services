@@ -92,3 +92,39 @@ def test_get_current_user_profile(client):
     res_auth = client.get("/me", headers={"Authorization": f"Bearer {token}"})
     assert res_auth.status_code == 200
     assert res_auth.get_json()["user"]["username"] == "profileuser"
+
+
+def test_update_user_profile_picture_and_bio(client):
+    reg = client.post(
+        "/register",
+        json={
+            "username": "avatar_user",
+            "email": "avatar@example.com",
+            "password": "Password123!",
+        },
+    )
+    token = reg.get_json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # 401 unauthorized
+    res_unauth = client.put("/me", json={"avatar_url": "https://example.com/pic.png"})
+    assert res_unauth.status_code == 401
+
+    # 200 update avatar and bio
+    res_update = client.put(
+        "/me",
+        headers=headers,
+        json={
+            "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
+            "bio": "Staff Systems Architect and Technical Writer.",
+        },
+    )
+    assert res_update.status_code == 200
+    user_data = res_update.get_json()["user"]
+    assert user_data["avatar_url"] == "https://images.unsplash.com/photo-1534528741775-53994a69daeb"
+    assert user_data["bio"] == "Staff Systems Architect and Technical Writer."
+
+    # Verify updated profile on GET /me
+    res_get = client.get("/me", headers=headers)
+    assert res_get.status_code == 200
+    assert res_get.get_json()["user"]["avatar_url"] == "https://images.unsplash.com/photo-1534528741775-53994a69daeb"
