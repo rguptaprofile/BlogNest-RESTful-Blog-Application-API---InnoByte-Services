@@ -182,9 +182,11 @@ class MongoDB:
 
     def _seed_sample_data(self):
         now = datetime.now(timezone.utc)
-        user_id = ObjectId("671b56a1e9447376c9682701")
+        
+        # 1. Seed Distinct Authors
+        user1_id = ObjectId("671b56a1e9447376c9682701")
         self.db["users"].insert_one({
-            "_id": user_id,
+            "_id": user1_id,
             "username": "johndoe",
             "email": "john@example.com",
             "password": generate_password_hash("Password123!"),
@@ -192,12 +194,43 @@ class MongoDB:
             "updated_at": now,
         })
 
+        user2_id = ObjectId("671b56a1e9447376c9682710")
+        self.db["users"].insert_one({
+            "_id": user2_id,
+            "username": "alex_river",
+            "email": "alex@blognest.internal",
+            "password": generate_password_hash("Password123!"),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        user3_id = ObjectId("671b56a1e9447376c9682720")
+        self.db["users"].insert_one({
+            "_id": user3_id,
+            "username": "elena_tech",
+            "email": "elena@techpress.io",
+            "password": generate_password_hash("Password123!"),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        user4_id = ObjectId("671b56a1e9447376c9682730")
+        self.db["users"].insert_one({
+            "_id": user4_id,
+            "username": "marcus_vance",
+            "email": "marcus@cloudsystems.net",
+            "password": generate_password_hash("Password123!"),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        # 2. Seed Realistic Technical Blog Posts
         post1_id = ObjectId("671b56b3e9447376c9682702")
         self.db["posts"].insert_one({
             "_id": post1_id,
             "title": "Welcome to BlogNest - RESTful Blog Application API!",
-            "content": "BlogNest is a high-performance blogging application API built with Flask, MongoDB, and JWT authentication. It provides full CRUD operations for posts, interactive commenting with cascade deletion, and full OpenAPI / Swagger documentation.",
-            "author_id": str(user_id),
+            "content": "BlogNest is a high-performance blogging application API built with Flask, MongoDB, and JWT authentication. It provides full CRUD operations for posts, interactive commenting with cascade deletion, and full OpenAPI / Swagger documentation.\n\nWhether you are drafting technical essays, designing software blueprints, or engaging with fellow engineers through comments and applause, BlogNest offers an authentic editorial experience engineered for readability and speed.",
+            "author_id": str(user1_id),
             "created_at": now,
             "updated_at": now,
         })
@@ -206,17 +239,94 @@ class MongoDB:
         self.db["posts"].insert_one({
             "_id": post2_id,
             "title": "Mastering REST APIs with Python & MongoDB",
-            "content": "Designing RESTful APIs requires clean separation of concerns, strong input validation, and robust role-based access control. MongoDB document collections provide flexible schemas that scale seamlessly.",
-            "author_id": str(user_id),
+            "content": "Designing RESTful APIs requires clean separation of concerns, strong input validation, and robust role-based access control. MongoDB document collections provide flexible schemas that scale seamlessly.\n\nIn this guide, we explore how indexing compound keys, structuring embedded versus referenced relationships, and leveraging PyMongo connection pooling can yield sub-millisecond query responses under heavy concurrency.",
+            "author_id": str(user1_id),
             "created_at": now,
             "updated_at": now,
         })
 
+        post3_id = ObjectId("671b56b3e9447376c9682706")
+        self.db["posts"].insert_one({
+            "_id": post3_id,
+            "title": "Designing High-Throughput REST APIs with Python & Connection Pooling",
+            "content": "When scaling Python web services from hundreds of requests per second to tens of thousands, database connection churn is almost always the silent killer.\n\nOpening and tearing down TCP connections and performing SSL handshakes on every HTTP call exhausts system file descriptors. By tuning PyMongo's maxPoolSize, waitQueueTimeoutMS, and socketTimeoutMS parameters, we observed an 82% reduction in p99 latency on our core endpoints.",
+            "author_id": str(user3_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        post4_id = ObjectId("671b56b3e9447376c9682707")
+        self.db["posts"].insert_one({
+            "_id": post4_id,
+            "title": "Building Fault-Tolerant Distributed Microservices: An Architect's Blueprint",
+            "content": "In distributed microservices, failures are not anomalies — they are an everyday certainty. Circuit breakers, idempotent consumer patterns, and retry policies with exponential backoff and jitter are fundamental to preventing cascading outages.\n\nThis article details our production blueprint for partitioning services around business domains, decoupling communication via asynchronous event streams, and maintaining operational observability with structured JSON telemetry.",
+            "author_id": str(user4_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        post5_id = ObjectId("671b56b3e9447376c9682708")
+        self.db["posts"].insert_one({
+            "_id": post5_id,
+            "title": "Demystifying JWT Security: Access Tokens, Refresh Cycles & Revocation Strategies",
+            "content": "JSON Web Tokens (JWT) are ubiquitous in modern single-page applications and REST APIs. However, improper signature verification, missing expiration times, or vulnerable local storage handling can open critical attack vectors.\n\nWe break down how to implement dual-token authentication (short-lived access tokens paired with securely hashed refresh tokens stored in HTTP-only cookies), along with distributed blacklist caches using Redis for immediate session revocation.",
+            "author_id": str(user2_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        post6_id = ObjectId("671b56b3e9447376c9682709")
+        self.db["posts"].insert_one({
+            "_id": post6_id,
+            "title": "From Monolith to Modular Monolith: Pragmatic Architecture in 2026",
+            "content": "Before jumping straight to microservices and paying the immense distributed systems tax, consider the modular monolith. By enforcing clean boundaries at the package and interface level, teams achieve high maintainability and rapid iteration.\n\nWe walk through real-world lessons from reorganizing a legacy codebase into cohesive vertical slices with isolated domains, shared database schemas, and strictly typed internal contracts.",
+            "author_id": str(user4_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        post7_id = ObjectId("671b56b3e9447376c968270a")
+        self.db["posts"].insert_one({
+            "_id": post7_id,
+            "title": "Zero-Downtime Database Migrations with MongoDB Document Versioning",
+            "content": "Unlike relational databases that enforce strict column DDL locks, MongoDB's flexible schema enables elegant expand-and-contract migration patterns.\n\nBy embedding a schema_version field inside documents and writing lazy-migration decoders in your application models, you can update schemas dynamically on read/write cycles without ever shutting down the API or running costly batch updates on millions of rows.",
+            "author_id": str(user3_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        post8_id = ObjectId("671b56b3e9447376c968270b")
+        self.db["posts"].insert_one({
+            "_id": post8_id,
+            "title": "Clean Code vs Fast Delivery: Finding the Pragmatic Sweet Spot in Tech Teams",
+            "content": "The debate between perfectionist software craft and shipping velocity is often framed as a zero-sum game. In reality, the best engineering teams build sustainable software by treating maintainability as a catalyst for speed, not an obstacle.\n\nHere are five concrete heuristics we use to determine when to refactor aggressively, when to incur controlled technical debt, and how to write tests that protect business logic without creating brittle maintenance burdens.",
+            "author_id": str(user1_id),
+            "created_at": now,
+            "updated_at": now,
+        })
+
+        # 3. Seed Realistic Comments
         self.db["comments"].insert_one({
             "_id": ObjectId("671b56c0e9447376c9682703"),
             "post_id": str(post1_id),
-            "content": "Incredible architecture and clean documentation!",
-            "author_id": str(user_id),
+            "content": "Incredible architecture and clean documentation! The REST API responses are lightning fast.",
+            "author_id": str(user1_id),
+            "created_at": now,
+        })
+
+        self.db["comments"].insert_one({
+            "_id": ObjectId("671b56c0e9447376c9682711"),
+            "post_id": str(post3_id),
+            "content": "Connection pooling made a night-and-day difference in our Flask microservices. Great writeup!",
+            "author_id": str(user2_id),
+            "created_at": now,
+        })
+
+        self.db["comments"].insert_one({
+            "_id": ObjectId("671b56c0e9447376c9682712"),
+            "post_id": str(post4_id),
+            "content": "The section on exponential backoff with jitter answered questions our team had been debating all week.",
+            "author_id": str(user3_id),
             "created_at": now,
         })
 

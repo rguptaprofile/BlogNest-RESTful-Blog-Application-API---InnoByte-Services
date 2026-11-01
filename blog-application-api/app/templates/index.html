@@ -128,30 +128,37 @@
   </header>
 
   <!-- ======================================================== -->
-  <!-- VIEW 1: PUBLIC STORIES FEED                              -->
+  <!-- VIEW 1: PUBLIC STORIES FEED (EDITORIAL PUBLICATION)      -->
   <!-- ======================================================== -->
   <div id="view-feed" class="flex-1 flex flex-col">
-    <!-- Editorial Hero Banner -->
-    <section class="border-b border-slate-200/70 bg-gradient-to-b from-white via-white to-slate-50/50 pt-12 pb-10">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl sm:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.15]">
-          Stay curious. Discover stories, thinking, and expertise.
+    
+    <!-- 1. Editorial Hero Banner & Search Ticker -->
+    <section class="border-b border-slate-200/80 bg-gradient-to-b from-white via-white to-slate-50/60 pt-12 pb-10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-[11px] font-semibold uppercase tracking-wider mb-4 border border-slate-200/70">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>The Independent Engineering Publication</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-slate-900 leading-[1.12]">
+          Ideas that expand your perspective.<br class="hidden sm:inline"> Stories that deepen your craft.
         </h1>
-        <p class="mt-4 text-base text-slate-500 max-w-xl mx-auto font-sans leading-relaxed">
-          A clean, distraction-free space for writers, creators, and developers to publish ideas and engage in meaningful discussions.
+        
+        <p class="mt-4 text-base text-slate-500 max-w-2xl mx-auto font-sans leading-relaxed">
+          A distraction-free sanctuary for software engineers, systems architects, and technical essayists. Read architectural deep-dives, publish insights, and join thoughtful conversations.
         </p>
 
         <!-- Topic Filters Bar -->
         <div class="mt-8 flex items-center justify-center gap-2 overflow-x-auto py-1 scrollbar-none text-xs font-medium">
-          <button onclick="filterByTopic('all')" class="topic-pill px-3.5 py-1.5 rounded-full bg-slate-900 text-white transition shadow-sm" data-topic="all">All Stories</button>
-          <button onclick="filterByTopic('Technology')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Technology">Technology</button>
-          <button onclick="filterByTopic('Python')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Python">Python</button>
-          <button onclick="filterByTopic('MongoDB')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="MongoDB">MongoDB</button>
-          <button onclick="filterByTopic('Architecture')" class="topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Architecture">Architecture</button>
+          <button onclick="filterByTopic('all')" class="topic-pill px-4 py-2 rounded-full bg-slate-900 text-white transition shadow-sm font-semibold" data-topic="all">All Stories</button>
+          <button onclick="filterByTopic('Architecture')" class="topic-pill px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Architecture">Architecture</button>
+          <button onclick="filterByTopic('Python')" class="topic-pill px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Python">Python & Backend</button>
+          <button onclick="filterByTopic('MongoDB')" class="topic-pill px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="MongoDB">MongoDB</button>
+          <button onclick="filterByTopic('Technology')" class="topic-pill px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition" data-topic="Technology">Technology</button>
         </div>
 
         <!-- Editorial Guest Invitation Banner (Shown when not logged in) -->
-        <div id="feed-guest-cta" class="mt-8 max-w-2xl mx-auto p-4 sm:p-5 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white rounded-2xl shadow-sm border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+        <div id="feed-guest-cta" class="mt-8 max-w-3xl mx-auto p-4 sm:p-5 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white rounded-2xl shadow-sm border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
           <div class="flex items-center gap-3.5">
             <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-emerald-400 shrink-0 font-serif font-bold text-lg">
               ✍️
@@ -159,9 +166,9 @@
             <div>
               <h4 class="text-xs sm:text-sm font-semibold tracking-tight text-white flex items-center gap-2">
                 <span>Start writing on BlogNest</span>
-                <span class="text-[10px] font-sans uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free</span>
+                <span class="text-[10px] font-sans uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free Writer Access</span>
               </h4>
-              <p class="text-[11px] text-slate-300 mt-0.5">Publish your technical guides, system designs, or essays to an engaged audience.</p>
+              <p class="text-[11px] text-slate-300 mt-0.5">Publish your technical guides, architectural blueprints, or essays to an engaged audience of 10k+ readers.</p>
             </div>
           </div>
           <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
@@ -176,48 +183,340 @@
       </div>
     </section>
 
-    <!-- Main Feed Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
-      <!-- Feed Header / Sorting -->
-      <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-8 text-xs font-medium text-slate-500">
-        <div class="flex items-center gap-2">
-          <span id="feed-status-text" class="text-slate-800 font-semibold">Latest Stories</span>
-          <span class="text-slate-300">•</span>
-          <span id="post-count-badge">Loading...</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <button onclick="toggleSort()" class="hover:text-slate-900 flex items-center gap-1 transition">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
-            <span id="sort-order-label">Newest first</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Stories List Container -->
-      <div id="stories-container" class="space-y-8">
-        <!-- Loading Skeleton -->
-        <div class="p-6 bg-white rounded-2xl border border-slate-100 animate-pulse space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-slate-200"></div>
-            <div class="w-28 h-3 bg-slate-200 rounded"></div>
+    <!-- 2. Trending on BlogNest (Medium-Style 6-Item Numbered Grid) -->
+    <section class="border-b border-slate-200/80 bg-white py-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs shadow-sm">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            </div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-sans">Trending on BlogNest</h2>
           </div>
-          <div class="w-3/4 h-6 bg-slate-200 rounded"></div>
-          <div class="w-full h-12 bg-slate-100 rounded"></div>
+          <span class="text-xs text-slate-400 hidden sm:inline">Ranked by reader engagement, responses, and applause</span>
+        </div>
+
+        <!-- Trending Grid Container -->
+        <div id="trending-stories-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-7">
+          <!-- Populated dynamically via JS -->
         </div>
       </div>
+    </section>
 
-      <!-- Empty State -->
-      <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-8">
-        <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+    <!-- 3. Editor's Spotlight Featured Deep Dive Story -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4 w-full">
+      <div id="featured-story-banner" class="bg-gradient-to-br from-slate-950 via-slate-900 to-[#1e1b4b] text-white rounded-3xl p-7 sm:p-10 shadow-xl border border-slate-800 relative overflow-hidden group">
+        <div class="absolute -top-24 -right-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="max-w-2xl space-y-3.5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[11px] font-semibold tracking-wide uppercase border border-white/10 backdrop-blur-sm">
+              <span>⭐ Editor's Spotlight</span>
+              <span class="text-white/40">•</span>
+              <span>Systems Architecture</span>
+            </div>
+
+            <h2 id="featured-title" onclick="openFeaturedStory()" class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white hover:text-emerald-300 transition cursor-pointer leading-tight">
+              Building Fault-Tolerant Distributed Microservices: An Architect's Blueprint
+            </h2>
+
+            <p id="featured-snippet" class="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed line-clamp-2">
+              In distributed microservices, failures are not anomalies — they are an everyday certainty. Circuit breakers, idempotent consumer patterns, and retry policies with exponential backoff and jitter are fundamental to preventing cascading outages.
+            </p>
+
+            <div class="flex items-center gap-3 pt-2 text-xs text-slate-300">
+              <div id="featured-avatar" class="w-7 h-7 rounded-full bg-indigo-600 ring-2 ring-white/20 flex items-center justify-center font-bold text-white text-[10px]">
+                M
+              </div>
+              <span id="featured-author" class="font-medium text-white">@marcus_vance</span>
+              <span class="text-white/40">•</span>
+              <span id="featured-read-time">8 min read</span>
+              <span class="text-white/40">•</span>
+              <span id="featured-claps">👏 89 claps</span>
+            </div>
+          </div>
+
+          <div class="shrink-0 flex sm:flex-col gap-2.5 w-full md:w-auto">
+            <button onclick="openFeaturedStory()" class="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-semibold text-xs transition shadow-lg text-center">
+              <span>Read Full Story</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
         </div>
-        <h3 class="text-base font-semibold text-slate-900">No stories match your criteria</h3>
-        <p class="text-xs text-slate-500 mt-1">Try resetting filters or write the first story in this category!</p>
-        <button onclick="openPostModal()" class="mt-4 px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition">
-          Write a Story
-        </button>
+      </div>
+    </section>
+
+    <!-- 4. Main Content Area (Split Grid: Feed + Sticky Sidebar) -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        <!-- Left Column: Story Feed (8 Cols) -->
+        <div class="lg:col-span-8 space-y-8">
+          <!-- Feed Header & Controls -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-200 gap-3 text-xs font-medium text-slate-500">
+            <div class="flex items-center gap-2">
+              <span id="feed-status-text" class="text-slate-900 font-bold text-sm font-serif">Latest Stories</span>
+              <span class="text-slate-300">•</span>
+              <span id="post-count-badge" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">Loading...</span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <button onclick="toggleSort()" class="hover:text-slate-900 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-300 transition text-slate-700">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
+                <span id="sort-order-label">Newest first</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stories List Container -->
+          <div id="stories-container" class="space-y-6">
+            <!-- Loading Skeleton -->
+            <div class="p-6 bg-white rounded-2xl border border-slate-100 animate-pulse space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-slate-200"></div>
+                <div class="w-28 h-3 bg-slate-200 rounded"></div>
+              </div>
+              <div class="w-3/4 h-6 bg-slate-200 rounded"></div>
+              <div class="w-full h-12 bg-slate-100 rounded"></div>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 p-8">
+            <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900">No stories match your criteria</h3>
+            <p class="text-xs text-slate-500 mt-1">Try resetting filters or write the first story in this category!</p>
+            <button onclick="openPostModal()" class="mt-4 px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition">
+              Write a Story
+            </button>
+          </div>
+
+          <!-- Mid-Feed Newsletter Interstitial Card -->
+          <div class="p-7 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white border border-slate-800 shadow-md">
+            <div class="max-w-xl">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/30">Weekly Dispatch</span>
+              <h3 class="text-xl font-serif font-bold text-white mt-2">Get hand-curated engineering breakdowns every Sunday.</h3>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">No spam, zero fluff. Deep dives on software architecture, MongoDB performance patterns, and backend engineering.</p>
+              
+              <form onsubmit="handleNewsletterSubscribe(event)" class="mt-4 flex flex-col sm:flex-row gap-2.5">
+                <input type="email" id="newsletter-email-input" required placeholder="Enter your work or personal email..." 
+                  class="flex-1 px-4 py-2.5 text-xs rounded-xl bg-white/10 hover:bg-white/15 focus:bg-white text-slate-100 focus:text-slate-900 border border-white/20 focus:border-white placeholder-slate-400 outline-none transition" />
+                <button type="submit" class="px-5 py-2.5 text-xs font-semibold rounded-xl bg-white text-slate-950 hover:bg-slate-100 transition shadow-sm shrink-0">
+                  Subscribe Free
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Feed End Indicator -->
+          <div class="text-center py-6 border-t border-slate-200 text-xs text-slate-500 flex flex-col items-center justify-center gap-2">
+            <span class="font-medium text-slate-700">You're all caught up with the latest publications!</span>
+            <p class="text-slate-400 max-w-sm">Have a unique system design, tutorial, or case study? Share it with our community.</p>
+            <button onclick="openPostModal()" class="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold transition shadow-sm text-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>Write your story</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Sticky Sidebar (4 Cols) -->
+        <aside class="lg:col-span-4 space-y-8 hidden lg:block">
+          <div class="sticky top-20 space-y-7">
+            
+            <!-- Widget 1: Staff Picks (What We're Reading) -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+              <div class="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-900">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                <span>Staff Picks</span>
+              </div>
+              <div id="staff-picks-list" class="space-y-4">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+
+            <!-- Widget 2: Recommended Topics (Tag Cloud) -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3.5">Recommended Topics</h3>
+              <div class="flex flex-wrap gap-2 text-xs">
+                <button onclick="filterByTopic('Architecture')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Architecture</button>
+                <button onclick="filterByTopic('Python')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Python 3.13</button>
+                <button onclick="filterByTopic('MongoDB')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">MongoDB</button>
+                <button onclick="filterByTopic('Technology')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">REST APIs</button>
+                <button onclick="filterByTopic('Architecture')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Microservices</button>
+                <button onclick="filterByTopic('Technology')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition">JWT Security</button>
+                <button onclick="filterByTopic('all')" class="px-3 py-1.5 rounded-full bg-slate-900 text-white font-medium transition">See all topics →</button>
+              </div>
+            </div>
+
+            <!-- Widget 3: Who to Follow (Featured Contributors) -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-4">Who to Follow</h3>
+              <div class="space-y-3.5">
+                <!-- Author 1 -->
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-indigo-900 text-white flex items-center justify-center font-bold text-xs shrink-0">E</div>
+                    <div class="min-w-0">
+                      <h4 class="text-xs font-semibold text-slate-900 truncate">@elena_tech</h4>
+                      <p class="text-[10px] text-slate-400 truncate">Database & Systems Engineer</p>
+                    </div>
+                  </div>
+                  <button onclick="toggleFollowAuthor('elena_tech', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Follow
+                  </button>
+                </div>
+
+                <!-- Author 2 -->
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-emerald-900 text-white flex items-center justify-center font-bold text-xs shrink-0">M</div>
+                    <div class="min-w-0">
+                      <h4 class="text-xs font-semibold text-slate-900 truncate">@marcus_vance</h4>
+                      <p class="text-[10px] text-slate-400 truncate">Cloud Systems Architect</p>
+                    </div>
+                  </div>
+                  <button onclick="toggleFollowAuthor('marcus_vance', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Follow
+                  </button>
+                </div>
+
+                <!-- Author 3 -->
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">A</div>
+                    <div class="min-w-0">
+                      <h4 class="text-xs font-semibold text-slate-900 truncate">@alex_river</h4>
+                      <p class="text-[10px] text-slate-400 truncate">API Security & Auth Scribe</p>
+                    </div>
+                  </div>
+                  <button onclick="toggleFollowAuthor('alex_river', this)" class="text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0">
+                    Follow
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Widget 4: Saved Reading List / Bookmarks -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+              <div class="flex items-center justify-between mb-3 text-xs">
+                <span class="font-bold uppercase tracking-wider text-slate-900">Your Reading List</span>
+                <span class="text-slate-400 text-[11px]">Saved</span>
+              </div>
+              <div id="sidebar-bookmarks-list" class="space-y-2 text-xs">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Widget 5: Write on BlogNest Box -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Write on BlogNest</h4>
+              <p class="text-xs text-slate-500 mt-1.5 mb-3.5">Reach 10,000+ software developers and architects with zero algorithmic gatekeeping.</p>
+              <button onclick="openPostModal()" class="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition shadow-sm">
+                Start Writing Today
+              </button>
+            </div>
+
+            <!-- Widget 6: Sticky Mini Footer Links -->
+            <div class="text-[11px] text-slate-400 flex flex-wrap gap-x-3 gap-y-1 pt-2">
+              <a href="/docs" target="_blank" class="hover:text-slate-700">API Docs</a>
+              <span>•</span>
+              <a href="/swagger.json" target="_blank" class="hover:text-slate-700">Swagger Spec</a>
+              <span>•</span>
+              <a href="#view-feed" onclick="filterByTopic('Architecture')" class="hover:text-slate-700">Architecture</a>
+              <span>•</span>
+              <a href="#view-feed" onclick="filterByTopic('Python')" class="hover:text-slate-700">Python</a>
+              <span>•</span>
+              <span class="text-slate-400">© 2026 BlogNest</span>
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
+
+    <!-- 5. Curated Architecture & Engineering Topic Tracks -->
+    <section class="border-t border-slate-200/80 bg-slate-50/70 py-12">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-200">Curated Learning Tracks</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">Deepen your technical domain mastery</h2>
+          <p class="text-xs text-slate-500 mt-1.5">Handpicked collections written by principal engineers and software architects.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Track 1 -->
+          <div onclick="filterByTopic('Architecture')" class="bg-white p-6 rounded-2xl border border-slate-200/80 hover:border-slate-400 transition-all shadow-sm hover:shadow cursor-pointer flex flex-col justify-between group">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-105 transition">
+                🏛️
+              </div>
+              <h3 class="font-serif font-bold text-base text-slate-900 group-hover:text-indigo-600 transition">Systems Architecture & Scale</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Microservices blueprints, circuit breaker patterns, event-driven decoupling, and modular monolith refactoring.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+              <span>Explore collection</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+
+          <!-- Track 2 -->
+          <div onclick="filterByTopic('Python')" class="bg-white p-6 rounded-2xl border border-slate-200/80 hover:border-slate-400 transition-all shadow-sm hover:shadow cursor-pointer flex flex-col justify-between group">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-105 transition">
+                ⚡
+              </div>
+              <h3 class="font-serif font-bold text-base text-slate-900 group-hover:text-emerald-600 transition">High-Throughput Python Backends</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Connection pooling, AsyncIO performance tuning, Flask blueprints, and robust input validation schemas.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600">
+              <span>Explore collection</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+
+          <!-- Track 3 -->
+          <div onclick="filterByTopic('MongoDB')" class="bg-white p-6 rounded-2xl border border-slate-200/80 hover:border-slate-400 transition-all shadow-sm hover:shadow cursor-pointer flex flex-col justify-between group">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-105 transition">
+                🍃
+              </div>
+              <h3 class="font-serif font-bold text-base text-slate-900 group-hover:text-amber-600 transition">MongoDB Document Data Modeling</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Zero-downtime document schema migrations, compound index optimization, and cascade deletion strategies.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-amber-600">
+              <span>Explore collection</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Platform Momentum & Metrics Banner -->
+    <section class="border-t border-slate-200 bg-white py-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div class="space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">10,000+</span>
+            <p class="text-xs text-slate-500 font-medium">Active Readers Worldwide</p>
+          </div>
+          <div class="space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">2,500+</span>
+            <p class="text-xs text-slate-500 font-medium">Published Engineering Stories</p>
+          </div>
+          <div class="space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-slate-900">18,000+</span>
+            <p class="text-xs text-slate-500 font-medium">Responses & Reader Applauses</p>
+          </div>
+          <div class="space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-emerald-600">99.98%</span>
+            <p class="text-xs text-slate-500 font-medium">REST API Uptime & Health</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ======================================================== -->
@@ -689,18 +988,74 @@
     </div>
   </div>
 
-  <!-- Clean Editorial Footer -->
-  <footer class="mt-auto border-t border-slate-200 bg-white py-8">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-      <div class="flex items-center gap-3">
-        <span class="font-serif font-bold text-slate-800 text-sm">BlogNest</span>
-        <span>•</span>
-        <span>Crafted for writers and readers</span>
+  <!-- Comprehensive Publication Footer -->
+  <footer class="mt-auto border-t border-slate-200 bg-white pt-12 pb-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-10 border-b border-slate-200">
+        <!-- Col 1 & 2: Brand & Mission -->
+        <div class="lg:col-span-2 space-y-3">
+          <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainView('feed')">
+            <div class="w-8 h-8 rounded-xl bg-slate-900 flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
+              B
+            </div>
+            <span class="text-lg font-bold tracking-tight text-slate-900 font-serif">BlogNest</span>
+          </div>
+          <p class="text-xs text-slate-500 max-w-sm leading-relaxed">
+            Where ideas find their authentic readers. An open, distraction-free publishing ecosystem crafted for developers, system architects, and technical essayists.
+          </p>
+          <div class="flex items-center gap-2 pt-2 text-[11px] text-slate-400">
+            <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono">Project SCR845NGFF</span>
+            <span>•</span>
+            <span>InnoByte Services</span>
+          </div>
+        </div>
+
+        <!-- Col 3: Discovery & Topics -->
+        <div class="space-y-2.5 text-xs">
+          <h4 class="font-bold uppercase tracking-wider text-slate-900 text-[11px]">Discover</h4>
+          <ul class="space-y-2 text-slate-500">
+            <li><button onclick="filterByTopic('all')" class="hover:text-slate-900 transition">All Stories</button></li>
+            <li><button onclick="filterByTopic('Architecture')" class="hover:text-slate-900 transition">Systems Architecture</button></li>
+            <li><button onclick="filterByTopic('Python')" class="hover:text-slate-900 transition">Python & Flask</button></li>
+            <li><button onclick="filterByTopic('MongoDB')" class="hover:text-slate-900 transition">MongoDB Schemas</button></li>
+            <li><button onclick="filterByTopic('Technology')" class="hover:text-slate-900 transition">REST & Security</button></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: For Writers -->
+        <div class="space-y-2.5 text-xs">
+          <h4 class="font-bold uppercase tracking-wider text-slate-900 text-[11px]">For Writers</h4>
+          <ul class="space-y-2 text-slate-500">
+            <li><button onclick="openPostModal()" class="hover:text-slate-900 transition">Draft a Story</button></li>
+            <li><button onclick="switchMainView('dashboard')" class="hover:text-slate-900 transition">Author Dashboard</button></li>
+            <li><button onclick="openAuthModal('register')" class="hover:text-slate-900 transition">Join Community</button></li>
+            <li><a href="/docs" target="_blank" class="hover:text-slate-900 transition">Publication Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: API & Engineering -->
+        <div class="space-y-2.5 text-xs">
+          <h4 class="font-bold uppercase tracking-wider text-slate-900 text-[11px]">API & Tech Stack</h4>
+          <ul class="space-y-2 text-slate-500">
+            <li><a href="/docs" target="_blank" class="hover:text-slate-900 transition flex items-center gap-1.5"><span>Swagger UI Docs</span><span class="text-[10px] text-emerald-600 font-mono">v1.0</span></a></li>
+            <li><a href="/swagger.json" target="_blank" class="hover:text-slate-900 transition">OpenAPI Spec JSON</a></li>
+            <li><a href="/api/health" target="_blank" class="hover:text-slate-900 transition">API Health Probe</a></li>
+            <li><span class="text-slate-400">MongoDB Document Store</span></li>
+            <li><span class="text-slate-400">JWT Token Security</span></li>
+          </ul>
+        </div>
       </div>
-      <div class="flex items-center gap-5">
-        <a href="/docs" target="_blank" class="hover:text-slate-800 transition">API Documentation</a>
-        <a href="/swagger.json" target="_blank" class="hover:text-slate-800 transition">OpenAPI Spec</a>
-        <span>MongoDB Document Store</span>
+
+      <!-- Footer Bottom -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        <p>© 2026 BlogNest Editorial Network. Crafted for writers and readers. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="/docs" target="_blank" class="hover:text-slate-700 transition">Terms of Service</a>
+          <span>•</span>
+          <a href="/docs" target="_blank" class="hover:text-slate-700 transition">Privacy Policy</a>
+          <span>•</span>
+          <a href="/docs" target="_blank" class="hover:text-slate-700 transition">Security</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -1497,6 +1852,10 @@
         const data = await res.json();
         allPosts = data.posts || [];
         applyFiltersAndRender();
+        renderTrendingStories(allPosts);
+        renderFeaturedStory(allPosts);
+        renderStaffPicks(allPosts);
+        renderBookmarksList();
       } catch (err) {
         document.getElementById('stories-container').innerHTML = `<p class="text-xs text-rose-500 py-4">Unable to load stories at this time.</p>`;
       }
@@ -1541,13 +1900,19 @@
       activeTopic = topic;
       document.querySelectorAll('.topic-pill').forEach(btn => {
         if (btn.dataset.topic === topic) {
-          btn.className = "topic-pill px-3.5 py-1.5 rounded-full bg-slate-900 text-white transition shadow-sm";
+          btn.className = "topic-pill px-4 py-2 rounded-full bg-slate-900 text-white transition shadow-sm font-semibold";
         } else {
-          btn.className = "topic-pill px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition";
+          btn.className = "topic-pill px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-600 hover:border-slate-400 transition";
         }
       });
       document.getElementById('feed-status-text').textContent = topic === 'all' ? 'Latest Stories' : `${topic} Stories`;
       applyFiltersAndRender();
+      
+      // Smoothly scroll down to stories area if clicking topic
+      const container = document.getElementById('stories-container');
+      if (container && window.scrollY > 400) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     function toggleSort() {
@@ -1556,9 +1921,210 @@
       applyFiltersAndRender();
     }
 
+    // 1. Trending 6-Item Grid Renderer
+    function renderTrendingStories(posts) {
+      const grid = document.getElementById('trending-stories-grid');
+      if (!grid || !posts || posts.length === 0) return;
+
+      const top6 = [...posts].slice(0, 6);
+      grid.innerHTML = top6.map((p, idx) => {
+        const num = String(idx + 1).padStart(2, '0');
+        const words = p.content ? p.content.split(/\s+/).length : 0;
+        const readTime = Math.max(1, Math.ceil(words / 200));
+        const dateStr = new Date(p.created_at || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric' });
+        const author = p.author || 'writer';
+        const claps = clapsMap[p.id] || (30 + (6 - idx) * 11);
+
+        return `
+          <div onclick="openReaderModal('${p.id}')" class="flex items-start gap-4 cursor-pointer group p-2.5 -m-2.5 rounded-2xl hover:bg-slate-50 transition duration-150">
+            <span class="text-3xl font-serif font-black text-slate-200 group-hover:text-slate-900 transition shrink-0 select-none">${num}</span>
+            <div class="space-y-1.5 flex-1 min-w-0">
+              <div class="flex items-center gap-2 text-[11px] text-slate-500">
+                <div class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[9px] shrink-0">
+                  ${author.charAt(0).toUpperCase()}
+                </div>
+                <span class="font-medium text-slate-800 truncate">@${author}</span>
+              </div>
+              <h3 class="font-serif font-bold text-sm text-slate-900 group-hover:text-slate-700 leading-snug line-clamp-2 transition">
+                ${escapeHtml(p.title)}
+              </h3>
+              <div class="flex items-center gap-2 text-[11px] text-slate-400">
+                <span>${dateStr}</span>
+                <span>•</span>
+                <span>${readTime} min read</span>
+                <span>•</span>
+                <span>👏 ${claps}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. Editor's Spotlight Featured Story
+    let currentFeaturedStory = null;
+    function renderFeaturedStory(posts) {
+      if (!posts || posts.length === 0) return;
+      const feat = posts.length > 3 ? posts[3] : posts[0];
+      currentFeaturedStory = feat;
+      
+      const titleEl = document.getElementById('featured-title');
+      const snippetEl = document.getElementById('featured-snippet');
+      const authorEl = document.getElementById('featured-author');
+      const avatarEl = document.getElementById('featured-avatar');
+      const readTimeEl = document.getElementById('featured-read-time');
+      const clapsEl = document.getElementById('featured-claps');
+
+      if (titleEl) titleEl.textContent = feat.title;
+      if (snippetEl) {
+        const cleanContent = feat.content.replace(/\n+/g, ' ');
+        snippetEl.textContent = cleanContent.length > 220 ? cleanContent.substring(0, 220) + '...' : cleanContent;
+      }
+      if (authorEl) authorEl.textContent = `@${feat.author || 'marcus_vance'}`;
+      if (avatarEl) avatarEl.textContent = (feat.author || 'M').charAt(0).toUpperCase();
+      const words = feat.content ? feat.content.split(/\s+/).length : 0;
+      const readTime = Math.max(1, Math.ceil(words / 200));
+      if (readTimeEl) readTimeEl.textContent = `${readTime} min read`;
+      if (clapsEl) clapsEl.textContent = `👏 ${clapsMap[feat.id] || 89} claps`;
+    }
+
+    function openFeaturedStory() {
+      if (currentFeaturedStory) {
+        openReaderModal(currentFeaturedStory.id);
+      } else if (allPosts.length > 0) {
+        openReaderModal(allPosts[0].id);
+      }
+    }
+
+    // 3. Staff Picks Sidebar Renderer
+    function renderStaffPicks(posts) {
+      const container = document.getElementById('staff-picks-list');
+      if (!container || !posts || posts.length === 0) return;
+
+      const picks = [...posts].slice(1, 4);
+      container.innerHTML = picks.map(p => {
+        const words = p.content ? p.content.split(/\s+/).length : 0;
+        const readTime = Math.max(1, Math.ceil(words / 200));
+        const author = p.author || 'writer';
+
+        return `
+          <div onclick="openReaderModal('${p.id}')" class="space-y-1.5 cursor-pointer group pb-3 border-b border-slate-100 last:border-none last:pb-0">
+            <div class="flex items-center gap-2 text-[11px] text-slate-500">
+              <div class="w-4 h-4 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[8px]">
+                ${author.charAt(0).toUpperCase()}
+              </div>
+              <span class="font-medium text-slate-800">@${author}</span>
+            </div>
+            <h4 class="font-serif font-bold text-xs text-slate-900 group-hover:text-slate-600 line-clamp-2 leading-snug transition">
+              ${escapeHtml(p.title)}
+            </h4>
+            <div class="text-[10px] text-slate-400">
+              <span>${readTime} min read</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 4. Bookmarks System
+    function getBookmarks() {
+      try { return JSON.parse(localStorage.getItem('blognest_bookmarks') || '[]'); }
+      catch { return []; }
+    }
+
+    function saveBookmarks(b) {
+      localStorage.setItem('blognest_bookmarks', JSON.stringify(b));
+    }
+
+    function toggleBookmark(postId, e) {
+      if (e) e.stopPropagation();
+      let b = getBookmarks();
+      const exists = b.includes(postId);
+      if (exists) {
+        b = b.filter(id => id !== postId);
+        showToast('Story removed from reading list.');
+      } else {
+        b.push(postId);
+        showToast('Story saved to reading list! 🔖');
+      }
+      saveBookmarks(b);
+      renderStories(displayedPosts);
+      renderBookmarksList();
+    }
+
+    function renderBookmarksList() {
+      const container = document.getElementById('sidebar-bookmarks-list');
+      if (!container) return;
+      const b = getBookmarks();
+      if (b.length === 0) {
+        container.innerHTML = `<p class="text-[11px] text-slate-400 italic">No saved stories yet. Click the bookmark icon on any story to save it here!</p>`;
+        return;
+      }
+      const savedPosts = allPosts.filter(p => b.includes(p.id));
+      if (savedPosts.length === 0) {
+        container.innerHTML = `<p class="text-[11px] text-slate-400 italic">Saved stories will appear here.</p>`;
+        return;
+      }
+      container.innerHTML = savedPosts.slice(0, 3).map(p => `
+        <div onclick="openReaderModal('${p.id}')" class="flex items-center justify-between text-xs py-1.5 cursor-pointer group border-b border-slate-100 last:border-none">
+          <span class="font-serif font-semibold text-slate-800 group-hover:text-slate-600 line-clamp-1 flex-1">${escapeHtml(p.title)}</span>
+          <span class="text-slate-400 text-[10px] shrink-0 ml-2 group-hover:text-slate-700">&rarr;</span>
+        </div>
+      `).join('');
+    }
+
+    // 5. Author Following System
+    function getFollowing() {
+      try { return JSON.parse(localStorage.getItem('blognest_following') || '[]'); }
+      catch { return []; }
+    }
+
+    function toggleFollowAuthor(username, btn) {
+      let following = getFollowing();
+      const isFollowing = following.includes(username);
+      if (isFollowing) {
+        following = following.filter(u => u !== username);
+        btn.className = "text-xs font-semibold px-3 py-1 rounded-full border border-slate-300 text-slate-700 hover:border-slate-800 transition shrink-0";
+        btn.textContent = "Follow";
+        showToast(`Unfollowed @${username}`);
+      } else {
+        following.push(username);
+        btn.className = "text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-white transition shrink-0";
+        btn.textContent = "Following ✓";
+        showToast(`You are now following @${username}!`);
+      }
+      localStorage.setItem('blognest_following', JSON.stringify(following));
+    }
+
+    // 6. Newsletter Subscription Handler
+    function handleNewsletterSubscribe(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsletter-email-input');
+      if (!input || !input.value.trim()) return;
+      showToast(`Subscribed! The BlogNest Dispatch will be sent to ${input.value.trim()} every Sunday! 📬`);
+      input.value = '';
+    }
+
+    // 7. Story Share Link Handler
+    function shareStory(postId, title, e) {
+      if (e) e.stopPropagation();
+      const url = `${window.location.origin}/#story-${postId}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Story link copied to clipboard! 🔗');
+        }).catch(() => {
+          showToast('Share URL: ' + url);
+        });
+      } else {
+        showToast('Share URL: ' + url);
+      }
+    }
+
+    // 8. Main Feed Stories Renderer
     function renderStories(posts) {
       const container = document.getElementById('stories-container');
       const emptyState = document.getElementById('empty-state');
+      const bookmarks = getBookmarks();
 
       if (!posts || posts.length === 0) {
         container.innerHTML = '';
@@ -1571,22 +2137,36 @@
         const isAuthor = currentUser && String(p.author_id) === String(currentUser.id);
         const words = p.content ? p.content.split(/\s+/).length : 0;
         const readTime = Math.max(1, Math.ceil(words / 200));
-        const dateStr = new Date(p.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' });
-        const snippet = p.content.length > 200 ? p.content.substring(0, 200) + '...' : p.content;
+        const dateStr = new Date(p.created_at || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric' });
+        const snippet = p.content.length > 220 ? p.content.substring(0, 220) + '...' : p.content;
+        const isBookmarked = bookmarks.includes(p.id);
+
+        let topic = 'Architecture';
+        const titleLower = p.title.toLowerCase();
+        if (titleLower.includes('python')) topic = 'Python';
+        else if (titleLower.includes('mongo')) topic = 'MongoDB';
+        else if (titleLower.includes('jwt') || titleLower.includes('rest')) topic = 'Technology';
+
+        const authorName = p.author || 'writer';
 
         return `
           <article class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 hover:border-slate-300 hover:shadow-sm transition-all duration-200 flex flex-col justify-between group">
             <div>
               <div class="flex items-center justify-between text-xs text-slate-500 mb-3">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-bold text-[10px]">
-                    ${(p.author || 'W').charAt(0).toUpperCase()}
+                  <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                    ${authorName.charAt(0).toUpperCase()}
                   </div>
-                  <span class="font-medium text-slate-800">@${p.author || 'writer'}</span>
-                  <span class="text-slate-300">•</span>
-                  <span>${dateStr}</span>
+                  <div>
+                    <span class="font-semibold text-slate-900 block leading-tight">@${authorName}</span>
+                    <span class="text-[11px] text-slate-400">${dateStr}</span>
+                  </div>
                 </div>
-                <span class="text-slate-400 text-[11px]">${readTime} min read</span>
+
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">${topic}</span>
+                  <span class="text-slate-400 text-[11px]">• ${readTime} min read</span>
+                </div>
               </div>
 
               <h2 onclick="openReaderModal('${p.id}')" class="text-xl sm:text-2xl font-serif font-bold text-slate-900 group-hover:text-slate-700 cursor-pointer transition leading-snug">
@@ -1597,15 +2177,29 @@
               </p>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-              <div class="flex items-center gap-4">
-                <span class="inline-flex items-center gap-1.5 hover:text-slate-700 cursor-pointer transition" onclick="openReaderModal('${p.id}')">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <div class="flex items-center gap-3">
+                <!-- Clap button -->
+                <button type="button" onclick="quickClap('${p.id}', event)" title="Clap for this story" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 hover:border-slate-400 bg-slate-50 hover:bg-white text-slate-700 transition">
+                  <span>👏</span>
+                  <span id="clap-count-${p.id}" class="font-semibold">${clapsMap[p.id] || 18}</span>
+                </button>
+
+                <!-- Response count -->
+                <button type="button" onclick="openReaderModal('${p.id}')" title="View responses" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                   <span>${p.comments_count || 0}</span>
-                </span>
-                <span class="hover:text-slate-700 cursor-pointer transition" onclick="quickClap('${p.id}')">
-                  👏 ${clapsMap[p.id] || 3}
-                </span>
+                </button>
+
+                <!-- Bookmark button -->
+                <button type="button" onclick="toggleBookmark('${p.id}', event)" title="${isBookmarked ? 'Remove bookmark' : 'Save for later'}" class="p-1 text-slate-400 hover:text-slate-800 transition">
+                  <svg class="w-4 h-4 ${isBookmarked ? 'text-amber-500 fill-amber-500' : ''}" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                </button>
+
+                <!-- Share button -->
+                <button type="button" onclick="shareStory('${p.id}', '${escapeHtml(p.title)}', event)" title="Share story" class="p-1 text-slate-400 hover:text-slate-800 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                </button>
               </div>
 
               <div class="flex items-center gap-2">
@@ -1617,7 +2211,7 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                   </button>
                 ` : ''}
-                <button onclick="openReaderModal('${p.id}')" class="font-medium text-slate-900 hover:text-black hover:underline transition">
+                <button onclick="openReaderModal('${p.id}')" class="font-semibold text-slate-900 hover:text-black hover:underline transition">
                   Read story &rarr;
                 </button>
               </div>
@@ -1627,9 +2221,16 @@
       }).join('');
     }
 
-    function quickClap(id) {
-      clapsMap[id] = (clapsMap[id] || 3) + 1;
-      applyFiltersAndRender();
+    function quickClap(id, e) {
+      if (e) e.stopPropagation();
+      clapsMap[id] = (clapsMap[id] || 18) + 1;
+      const el = document.getElementById(`clap-count-${id}`);
+      if (el) {
+        el.textContent = clapsMap[id];
+        el.parentElement.classList.add('scale-110');
+        setTimeout(() => el.parentElement.classList.remove('scale-110'), 150);
+      }
+      showToast(`👏 Applauded! (${clapsMap[id]} claps)`);
     }
 
     // Utilities
